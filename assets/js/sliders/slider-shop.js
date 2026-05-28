@@ -4,7 +4,7 @@ const isMobile = window.innerWidth <= 768;
 
 const slides = isMobile
     ? [
-        'assets/images/images_shop/materials/slidermob.png',
+        'assets/images/images_shop/materials/slidermob.jpg',
     ]
     : [
         'assets/images/images_shop/materials/slider.png',
