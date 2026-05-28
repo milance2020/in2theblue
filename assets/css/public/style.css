@@ -83,7 +83,7 @@ body {
     width: 100%;
     height: 100%;
 
-    object-fit: cover;
+    
 
     z-index: 1;
 }
@@ -100,6 +100,10 @@ body {
         height: 70vh;
         min-height: 620px;
     }
+    #slider img {
+        object-fit: cover;
+    }
+    
     
 }
 
@@ -109,6 +113,9 @@ body {
         height: 85vh;
         min-height: 720px;
     }
+    #slider img {
+        object-fit: cover;
+    }
 }
 
 @media screen and (min-width: 1600px) {
@@ -116,6 +123,9 @@ body {
     #slider {
         height: 85vh;
         min-height: 720px;
+    }
+    #slider img {
+        object-fit: cover;
     }
 }
 
