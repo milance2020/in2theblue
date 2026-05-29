@@ -1,37 +1,24 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 if (!defined('DIR_ROOT')) {
     require_once dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'constants.php';
 }
+
+require_once FILE_SECURITY_HELPER;
+require_admin();
+csrf_verify_or_die();
+
 include FILE_CONNECT;
 
-// =========================
-// INPUT DATA
-// =========================
-
-$id = (int)($_POST['id'] ?? 0);
-
+$id = (int) ($_POST['id'] ?? 0);
 $name = trim($_POST['name'] ?? '');
 $description = trim($_POST['description'] ?? '');
-$price = (float)($_POST['price'] ?? 0);
-
-// stock array (size => qty)
+$price = (float) ($_POST['price'] ?? 0);
 $stock = $_POST['stock'] ?? [];
-
-// =========================
-// VALIDATION (basic)
-// =========================
 
 if ($id <= 0) {
     exit("Invalid product ID");
 }
-
-// =========================
-// UPDATE PRODUCT (MAIN TABLE)
-// =========================
 
 $stmt = $conn->prepare("
     UPDATE products2
@@ -41,25 +28,12 @@ $stmt = $conn->prepare("
     WHERE id = ?
 ");
 
-$stmt->bind_param(
-    "ssdi",
-    $name,
-    $description,
-    $price,
-    $id
-);
-
+$stmt->bind_param("ssdi", $name, $description, $price, $id);
 $stmt->execute();
 
-// =========================
-// UPDATE PRODUCT SIZES (VARIANTS)
-// =========================
-
 foreach ($stock as $size => $qty) {
+    $qty = (int) $qty;
 
-    $qty = (int)$qty;
-
-    // check if row exists
     $check = $conn->prepare("
         SELECT id
         FROM product_sizes
@@ -72,8 +46,6 @@ foreach ($stock as $size => $qty) {
     $res = $check->get_result();
 
     if ($res->num_rows > 0) {
-
-        // UPDATE
         $stmt = $conn->prepare("
             UPDATE product_sizes
             SET stock = ?
@@ -83,10 +55,7 @@ foreach ($stock as $size => $qty) {
 
         $stmt->bind_param("iis", $qty, $id, $size);
         $stmt->execute();
-
     } else {
-
-        // INSERT
         $stmt = $conn->prepare("
             INSERT INTO product_sizes (product_id, size, stock)
             VALUES (?, ?, ?)
@@ -97,8 +66,6 @@ foreach ($stock as $size => $qty) {
     }
 }
 
-// =========================
-// RESPONSE
-// =========================
-
-echo "✅ Product successfully updated!";
+flash_set('success', 'Proizvod je uspjesno azuriran.');
+header("Location: index.php?page=adminPanel&view=update&id=" . $id);
+exit;

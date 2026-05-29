@@ -1,0 +1,417 @@
+﻿/* =========================================================
+   BAR LANDING - SHARED SECTIONS
+========================================================= */
+
+.bar-intro-section,
+.bar-offer-section,
+.bar-story-section,
+.bar-menu-section,
+.bar-map-section {
+    padding: 90px 6%;
+}
+
+.bar-intro-section,
+.bar-offer-section,
+.bar-map-section {
+    background: #f4f4f4;
+}
+
+.bar-story-section,
+.bar-menu-section {
+    background: white;
+}
+
+.bar-intro-content,
+.bar-story-content,
+.bar-map-header,
+.bar-menu-header {
+    max-width: 900px;
+
+    margin: 0 auto;
+}
+
+.bar-section-tag {
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: #008f9d;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+.bar-intro-content h2,
+.bar-story-content h2,
+.bar-menu-header h2,
+.bar-map-header h2 {
+    margin-bottom: 22px;
+
+    color: #252525;
+
+    font-size: 46px;
+    font-weight: 900;
+
+    line-height: 1.1;
+
+    text-transform: uppercase;
+}
+
+.bar-lead {
+    margin-bottom: 16px;
+
+    color: #008f9d;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.bar-intro-content p,
+.bar-story-content p,
+.bar-menu-header p,
+.bar-map-header p {
+    color: #555;
+
+    font-size: 18px;
+
+    line-height: 1.8;
+}
+
+
+
+/* =========================================================
+   BAR LANDING - OFFER CARDS
+========================================================= */
+
+.bar-offer-grid {
+    max-width: 1480px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 26px;
+}
+
+.bar-offer-card {
+    background: white;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.bar-offer-img {
+    height: 240px;
+
+    background-size: cover;
+    background-position: center;
+}
+
+.bar-offer-content {
+    padding: 24px;
+}
+
+.bar-offer-content h3 {
+    margin-bottom: 12px;
+
+    color: #252525;
+
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.bar-offer-content p {
+    color: #008f9d;
+
+    line-height: 1.7;
+}
+
+
+
+/* =========================================================
+   BAR LANDING - STORY
+========================================================= */
+
+.bar-story-btn {
+    display: inline-flex;
+
+    margin-top: 26px;
+
+    padding: 15px 28px;
+
+    background: #008f9d;
+    color: white;
+
+    border-radius: 999px;
+
+    font-weight: 800;
+
+    text-decoration: none;
+}
+
+.bar-story-btn:hover {
+    background: #006f79;
+}
+
+
+
+/* =========================================================
+   BAR LANDING - MENU / PDF
+========================================================= */
+
+.bar-menu-header {
+    max-width: 900px;
+
+    margin: 0 auto 40px;
+
+    text-align: center;
+}
+
+.bar-menu-wrapper {
+    max-width: 1400px;
+
+    margin: 0 auto;
+    padding: 50px;
+
+    background: #f4f4f4;
+
+    border-radius: 18px;
+
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+.meni {
+    width: 100%;
+}
+
+.meni-header {
+    max-width: 900px;
+
+    margin: 0 auto 35px;
+
+    text-align: center;
+}
+
+.meni-tag {
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: #008f9d;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+.meni-header h2 {
+    margin-bottom: 16px;
+
+    color: #252525;
+
+    font-size: 42px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.meni-header p {
+    color: #555;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+}
+
+.meni-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 35px;
+    padding: 16px 30px;
+
+    background: #008f9d;
+    color: white;
+
+    border: none;
+    border-radius: 999px;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.meni-btn:hover {
+    background: #006f79;
+
+    transform: translateY(-2px);
+}
+
+.pdf-container {
+    display: none;
+
+    width: 100%;
+}
+
+.pdf-container iframe {
+    width: 100%;
+    height: 900px;
+
+    background: white;
+
+    border: none;
+    border-radius: 16px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+
+/* =========================================================
+   BAR LANDING - MAP
+========================================================= */
+
+.bar-map-container {
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+
+/* =========================================================
+   BAR LANDING RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .bar-offer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .bar-intro-section,
+    .bar-offer-section,
+    .bar-story-section,
+    .bar-menu-section,
+    .bar-map-section {
+        padding: 70px 6%;
+    }
+
+    .bar-intro-content h2,
+    .bar-story-content h2,
+    .bar-menu-header h2,
+    .bar-map-header h2,
+    .meni-header h2 {
+        font-size: 38px;
+        line-height: 1.15;
+    }
+
+    .bar-intro-content p,
+    .bar-story-content p,
+    .bar-menu-header p,
+    .bar-map-header p,
+    .meni-header p,
+    .bar-offer-content p {
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .bar-offer-grid {
+        grid-template-columns: 1fr;
+
+        gap: 24px;
+    }
+
+    .bar-offer-img {
+        height: 260px;
+    }
+
+    .bar-offer-content {
+        padding: 28px;
+    }
+
+    .bar-offer-content h3 {
+        font-size: 28px;
+    }
+
+    .bar-story-btn,
+    .meni-btn {
+        width: 100%;
+        min-height: 58px;
+
+        font-size: 16px;
+    }
+
+    .pdf-container iframe {
+        height: 700px;
+    }
+
+    .hero-content h1 {
+        font-size: 44px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .hero-btn {
+        width: 100%;
+        min-height: 58px;
+
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .bar-intro-section,
+    .bar-offer-section,
+    .bar-story-section,
+    .bar-menu-section,
+    .bar-map-section {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .bar-offer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bar-intro-content h2,
+    .bar-story-content h2,
+    .bar-menu-header h2,
+    .bar-map-header h2 {
+        font-size: 32px;
+    }
+
+    .bar-menu-wrapper {
+        padding: 24px;
+    }
+}
+

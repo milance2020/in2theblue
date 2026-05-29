@@ -1,0 +1,88 @@
+﻿/* =========================================================
+   13. HERO CONTENT / HERO BUTTONS
+========================================================= */
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    transform: translateY(-50%);
+    z-index: 20;
+    max-width: 720px;
+}
+
+.hero-tag {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--color-primary-soft);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.hero-content h1 {
+    color: var(--color-white);
+    font-size: 74px;
+    line-height: 1.02;
+    font-weight: 900;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    text-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero-content p {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 20px;
+    line-height: 1.7;
+    max-width: 620px;
+    margin-bottom: 34px;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 28px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+}
+
+.hero-btn.primary {
+    background: var(--color-white);
+    color: #222;
+    border: 2px solid var(--color-white);
+}
+
+.hero-btn.primary:hover {
+    background: transparent;
+    color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+.hero-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-white);
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+}
+
+.hero-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+

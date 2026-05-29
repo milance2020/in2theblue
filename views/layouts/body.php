@@ -28,6 +28,10 @@ $page = $_GET['page'] ?? 'index';
 
 <model-<?= $_output['html_model'] ?>>
 
+    <?php if (empty($_output['layout'])): ?>
+        <?= flash_render() ?>
+    <?php endif; ?>
+
     <?php
 if (!empty($_output['layout'])) {
     $__viewFile = view_path('layouts/' . $_output['layout']);

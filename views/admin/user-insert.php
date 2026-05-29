@@ -1,4 +1,6 @@
 <form action="index.php?page=adminPanel&action=insertUsers" method="post" enctype="multipart/form-data" class="form">
+    <?= csrf_input() ?>
+
     <label for="username">Username</label>
     <input type="text" name="username" required><br>
 

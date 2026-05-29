@@ -1,8 +1,12 @@
 <?php
 
+require_once FILE_SECURITY_HELPER;
+require_admin();
+csrf_verify_or_die();
+
 include_once FILE_CONNECT;
 
-$orderId = (int)($_POST['order_id'] ?? 0);
+$orderId = (int) ($_POST['order_id'] ?? 0);
 $newStatus = $_POST['status'] ?? '';
 
 $allowedStatuses = [
@@ -14,13 +18,14 @@ $allowedStatuses = [
 ];
 
 if ($orderId <= 0 || !in_array($newStatus, $allowedStatuses, true)) {
-    die('Invalid request');
+    flash_set('error', 'Neispravan zahtjev za narudzbu.');
+    header("Location: index.php?page=adminPanel&view=orders");
+    exit;
 }
 
 $conn->begin_transaction();
 
 try {
-
     $stmt = $conn->prepare("
         SELECT status, stock_reduced
         FROM orders
@@ -34,15 +39,14 @@ try {
     $order = $stmt->get_result()->fetch_assoc();
 
     if (!$order) {
-        throw new Exception('Order not found');
+        throw new Exception('Narudzba nije pronadjena.');
     }
 
     $shouldReduceStock =
-        (int)$order['stock_reduced'] === 0 &&
+        (int) $order['stock_reduced'] === 0 &&
         $newStatus === 'Shipped';
 
     if ($shouldReduceStock) {
-
         $stmt = $conn->prepare("
             SELECT product_id, size, quantity
             FROM order_items
@@ -55,7 +59,6 @@ try {
         $items = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
         foreach ($items as $item) {
-
             $stmt = $conn->prepare("
                 UPDATE product_sizes
                 SET stock = stock - ?
@@ -75,9 +78,7 @@ try {
             $stmt->execute();
 
             if ($stmt->affected_rows === 0) {
-                throw new Exception(
-                    'Not enough stock for product ID: ' . $item['product_id']
-                );
+                throw new Exception('Nema dovoljno zaliha za proizvod ID: ' . $item['product_id']);
             }
         }
 
@@ -89,9 +90,7 @@ try {
 
         $stmt->bind_param("si", $newStatus, $orderId);
         $stmt->execute();
-
     } else {
-
         $stmt = $conn->prepare("
             UPDATE orders
             SET status = ?
@@ -104,12 +103,13 @@ try {
 
     $conn->commit();
 
+    flash_set('success', 'Status narudzbe je azuriran.');
     header("Location: index.php?page=adminPanel&view=order_info&id=" . $orderId);
     exit;
-
 } catch (Exception $e) {
-
     $conn->rollback();
 
-    die('Error: ' . $e->getMessage());
+    flash_set('error', $e->getMessage());
+    header("Location: index.php?page=adminPanel&view=order_info&id=" . $orderId);
+    exit;
 }

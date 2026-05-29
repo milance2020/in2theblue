@@ -6,6 +6,10 @@ ini_set('display_errors', 1);
 if (!defined('DIR_ROOT')) {
     require_once dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'constants.php';
 }
+require_once FILE_SECURITY_HELPER;
+require_admin();
+csrf_verify_or_die();
+
 include FILE_CONNECT;
 
 // =====================
@@ -100,5 +104,6 @@ foreach ($sizes as $size => $stock) {
 // =====================
 // DONE
 // =====================
-header("Location: /v5/index.php?page=adminPanel");
+flash_set('success', 'Proizvod je uspjesno dodan.');
+header("Location: /v5/index.php?page=adminPanel&view=view");
 exit;

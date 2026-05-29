@@ -1,0 +1,96 @@
+﻿.checkout-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    padding: 40px;
+}
+
+.checkout-form {
+    flex: 2;
+}
+
+.order-summary {
+    flex: 1;
+    background: #f8f8f8;
+    padding: 25px;
+    border-radius: 14px;
+    position: sticky;
+    top: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.checkout-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+}
+
+.checkout-form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: -8px;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: 0.2s ease;
+}
+
+.checkout-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus,
+.checkout-form select:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-form button {
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    background: #000;
+    color: var(--color-white);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.checkout-form button:hover {
+    transform: translateY(-2px);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-size: 15px;
+}
+
+.summary-total {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   10. ORDER SUCCESS PAGE
+========================================================= */

@@ -1,0 +1,22 @@
+﻿/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+#login_forma {
+    width: 20em;
+    height: 20em;
+
+    margin: 0 auto;
+    padding: 30px;
+
+    border: 1px solid black;
+
+    text-align: left;
+}
+
+#login_forma input {
+    display: block;
+}
+
+
+

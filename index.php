@@ -65,6 +65,8 @@ if (!isset($_SESSION['cart'])) {
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'constants.php';
 
+require_once FILE_SECURITY_HELPER;
+
 require_once FILE_URL_HELPER;
 
 require_once DIR_CORE . 'view.php';

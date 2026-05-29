@@ -7,6 +7,8 @@
         
         <div id="links-admin">
           <ul>
+            <li><a href="index.php?page=adminPanel">Dashboard</a></li>
+            <hr>
             <li><a href="<?= appUrl('shop') ?>">Shop</a></li>
             <li><a href="index.php?page=adminPanel&view=view">Pregled Proizvoda</a></li>
             <li><a href="index.php?page=adminPanel&view=insert">Unesi proizvod</a></li>
@@ -37,6 +39,8 @@
     </aside>
 
     <main class="content">
+        <?= flash_render() ?>
+
         <?php if (!empty($_output['view'])): ?>
             <?php
             $__viewFile = view_path($_output['view']);

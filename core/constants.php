@@ -46,6 +46,7 @@ define('URL_ASSETS_IMAGES_NEWS', URL_ASSETS . 'images/images_news/');
 define('URL_ASSETS_IMAGES_SHOP', URL_ASSETS . 'images/images_shop/products/');
 
 define('FILE_CONSTANTS', DIR_CORE . 'constants.php');
+define('FILE_SECURITY_HELPER', DIR_CORE . 'security.php');
 define('FILE_PUBLIC_CONTROLLER', DIR_CONTROLERS . 'publicController.php');
 define('FILE_CONNECT', DIR_ADMIN_INCLUDES . 'connect.php');
 define('FILE_SEO_HELPER', DIR_MODEL_HELPERS . 'seo.php');

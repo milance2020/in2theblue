@@ -1,0 +1,31 @@
+.flash-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 0 22px;
+}
+
+.flash-message {
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+}
+
+.flash-success {
+    background: #e8fff1;
+    color: #176b3a;
+    border: 1px solid #bfe8cf;
+}
+
+.flash-error {
+    background: #fff0f0;
+    color: #9b1c1c;
+    border: 1px solid #f3caca;
+}
+
+.flash-info {
+    background: #eef7ff;
+    color: #1d4f78;
+    border: 1px solid #cde4f5;
+}

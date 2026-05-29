@@ -16,8 +16,8 @@ function addBreadcrumb(string $label, ?string $url = null): void
 
 function addShopBreadcrumbs(): void
 {
-    addBreadcrumb('Početna', pageUrl('index'));
-    addBreadcrumb('In2TheShop', pageUrl('explore'));
+    addBreadcrumb('Pocetna', appUrl('in2theshop'));
+    addBreadcrumb('In2TheShop', shopUrl());
 }
 
 function pageTitle(string $page): string
@@ -38,8 +38,8 @@ function pageTitle(string $page): string
 function genderLabel(string $gender): string
 {
     return match (strtolower($gender)) {
-        'male'   => 'Muško',
-        'female' => 'Žensko',
+        'male'   => 'Musko',
+        'female' => 'Zensko',
         'unisex' => 'Unisex',
         default  => ucfirst($gender),
     };
@@ -47,11 +47,7 @@ function genderLabel(string $gender): string
 
 function cleanMetaDescription(?string $text): string
 {
-    return substr(
-        strip_tags($text ?? ''),
-        0,
-        160
-    );
+    return substr(strip_tags($text ?? ''), 0, 160);
 }
 
 function setSEO(string $type, array $data = []): void
@@ -62,25 +58,19 @@ function setSEO(string $type, array $data = []): void
     $_output['breadcrumbs'] = [];
 
     $exploreUrl = pageUrl('explore');
-    $cartUrl    = pageUrl('cart-checkout');
+    $cartUrl = pageUrl('cart-checkout');
 
-    // =====================================================
-    // SHOP LANDING
-    // =====================================================
     if ($type === 'shop') {
         $_output['meta_title'] = 'In2TheShop';
         $_output['meta_description'] = 'Online shop sa modernim proizvodima.';
         $_output['canonical'] = pageUrl('shop');
 
-        addBreadcrumb('Početna', pageUrl('index'));
+        addBreadcrumb('Pocetna', pageUrl('index'));
         addBreadcrumb('In2TheShop');
 
         return;
     }
 
-    // =====================================================
-    // PRODUCT PAGE
-    // =====================================================
     if ($type === 'product') {
         $name = $data['name'] ?? 'Product';
 
@@ -107,19 +97,14 @@ function setSEO(string $type, array $data = []): void
         return;
     }
 
-    // =====================================================
-    // EXPLORE PAGE
-    // =====================================================
     if ($type === 'explore') {
-        $category      = $data['category'] ?? '';
-        $gender        = $data['gender'] ?? '';
-        $search        = $data['search'] ?? '';
+        $category = $data['category'] ?? '';
+        $gender = $data['gender'] ?? '';
+        $search = $data['search'] ?? '';
         $categoryLabel = $data['category_label'] ?? '';
 
         if ($categoryLabel === '' && $category !== '') {
-            $categoryLabel = ucwords(
-                str_replace(['-', '_'], ' ', $category)
-            );
+            $categoryLabel = ucwords(str_replace(['-', '_'], ' ', $category));
         }
 
         $title = 'Shop';
@@ -135,31 +120,21 @@ function setSEO(string $type, array $data = []): void
         }
 
         $_output['meta_title'] = $title;
-        $_output['meta_description'] = 'Istražite našu kolekciju proizvoda.';
+        $_output['meta_description'] = 'Istrazite nasu kolekciju proizvoda.';
         $_output['canonical'] = $data['url'] ?? $exploreUrl;
 
         addShopBreadcrumbs();
 
-        $hasFilters =
-            $category !== '' ||
-            $gender !== '' ||
-            $search !== '';
+        $hasFilters = $category !== '' || $gender !== '' || $search !== '';
 
-        addBreadcrumb(
-            'Proizvodi',
-            $hasFilters ? $exploreUrl : null
-        );
+        addBreadcrumb('Proizvodi', $hasFilters ? $exploreUrl : null);
 
         if ($category !== '') {
             $isLast = $gender === '' && $search === '';
 
             addBreadcrumb(
                 $categoryLabel,
-                $isLast
-                    ? null
-                    : pageUrl('explore', [
-                        'category' => $category
-                    ])
+                $isLast ? null : pageUrl('explore', ['category' => $category])
             );
         }
 
@@ -173,9 +148,7 @@ function setSEO(string $type, array $data = []): void
 
             addBreadcrumb(
                 genderLabel($gender),
-                $isLast
-                    ? null
-                    : pageUrl('explore', $genderParams)
+                $isLast ? null : pageUrl('explore', $genderParams)
             );
         }
 
@@ -186,9 +159,6 @@ function setSEO(string $type, array $data = []): void
         return;
     }
 
-    // =====================================================
-    // CART
-    // =====================================================
     if ($type === 'cart') {
         $_output['meta_title'] = 'Korpa | Shop';
         $_output['meta_description'] = '';
@@ -201,40 +171,31 @@ function setSEO(string $type, array $data = []): void
         return;
     }
 
-    // =====================================================
-    // CHECKOUT
-    // =====================================================
     if ($type === 'checkout') {
-        $_output['meta_title'] = 'Naručivanje | Shop';
+        $_output['meta_title'] = 'Narucivanje | Shop';
         $_output['meta_description'] = '';
         $_output['meta_robots'] = 'noindex, nofollow';
         $_output['canonical'] = pageUrl('order');
 
         addShopBreadcrumbs();
         addBreadcrumb('Korpa', $cartUrl);
-        addBreadcrumb('Naručivanje');
+        addBreadcrumb('Narucivanje');
 
         return;
     }
 
-    // =====================================================
-    // ORDER SUCCESS
-    // =====================================================
     if ($type === 'order_success') {
-        $_output['meta_title'] = 'Narudžba uspješna | Shop';
-        $_output['meta_description'] = 'Vaša narudžba je uspješno kreirana.';
+        $_output['meta_title'] = 'Narudzba uspjesna | Shop';
+        $_output['meta_description'] = 'Vasa narudzba je uspjesno kreirana.';
         $_output['meta_robots'] = 'noindex, follow';
 
         addShopBreadcrumbs();
         addBreadcrumb('Korpa', $cartUrl);
-        addBreadcrumb('Uspješno naručeno');
+        addBreadcrumb('Uspjesno naruceno');
 
         return;
     }
 
-    // =====================================================
-    // FALLBACK
-    // =====================================================
     $_output['meta_title'] = pageTitle($type);
     $_output['meta_description'] = 'Online shop sa modernim proizvodima.';
 }

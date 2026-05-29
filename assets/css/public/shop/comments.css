@@ -1,0 +1,196 @@
+﻿/* =========================================================
+   07. COMMENTS / REPLIES
+========================================================= */
+
+.comments-section {
+    margin-top: 60px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background: var(--color-white);
+}
+
+.comments-section h2 {
+    margin-bottom: 24px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.comment-form,
+.reply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.comment-form input,
+.comment-form textarea,
+.reply-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s ease;
+    resize: vertical;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus,
+.reply-form textarea:focus {
+    border-color: var(--color-text-dark);
+}
+
+.comment-form textarea,
+.reply-form textarea {
+    min-height: 120px;
+}
+
+.comment-form button,
+.reply-form button {
+    align-self: flex-start;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--color-text-dark);
+    color: var(--color-white);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.comment-form button:hover,
+.reply-form button:hover {
+    opacity: 0.9;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment {
+    padding: 18px;
+    border: 1px solid #ececec;
+    border-radius: 14px;
+    background: #fafafa;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.comment-user {
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.comment-date {
+    font-size: 13px;
+    color: #888;
+}
+
+.comment-body p {
+    margin: 0;
+    line-height: 1.6;
+    color: #222;
+    word-break: break-word;
+}
+
+.comment-actions {
+    margin-top: 16px;
+}
+
+.reply-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #ececec;
+    color: var(--color-text-dark);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.reply-btn:hover {
+    background: #ddd;
+}
+
+.replies {
+    margin-top: 20px;
+    margin-left: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.no-comments {
+    padding: 20px;
+    border-radius: 12px;
+    background: #f5f5f5;
+    text-align: center;
+    color: var(--color-light-muted);
+    font-size: 15px;
+}
+
+.comments-login-note {
+    margin-bottom: 24px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #f3f3f3;
+    color: #666;
+    font-size: 14px;
+}
+
+.reported {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   08. TOAST NOTIFICATIONS
+========================================================= */
+
+#toast,
+#toast-green {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: var(--color-white);
+    padding: 12px 18px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: 0.3s ease;
+    z-index: 2000;
+}
+
+#toast {
+    background: red;
+}
+
+#toast-green {
+    background: green;
+}
+
+#toast.show,
+#toast-green.show {
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   09. CHECKOUT PAGE
+========================================================= */
+

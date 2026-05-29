@@ -1,0 +1,59 @@
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+    --color-primary: #008f9d;
+    --color-primary-dark: #006f79;
+    --color-primary-soft: #7fe7f1;
+
+    --color-text: #252525;
+    --color-text-dark: #111;
+    --color-muted: #555;
+    --color-light-muted: #777;
+
+    --color-bg: #f6f6f6;
+    --color-bg-soft: #f4f4f4;
+    --color-white: #fff;
+    --color-border: #e5e5e5;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-pill: 999px;
+
+    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 8px 22px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.12);
+
+    --section-padding: 80px 6%;
+}
+
+
+/* =========================================================
+   BASE / RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text-dark);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}

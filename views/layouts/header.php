@@ -1,8 +1,6 @@
 <?php
 $page = $_GET['page'] ?? 'index';
-
 ?>
-
 
 <?php if ($page == 'index'): ?>
     <?php $slider = 'slider-bar.js'; ?>
@@ -13,22 +11,22 @@ $page = $_GET['page'] ?? 'index';
             <div class="hero-content">
 
                 <span class="hero-tag">
-                    SUNSET • KOKTELI • GLAZBA
+                    SUNSET - KOKTELI - GLAZBA
                 </span>
 
                 <h1>
-                    Mjesto Gdje Ljeto Ostaje Duže
+                    Mjesto gdje ljeto ostaje duze
                 </h1>
 
                 <p>
-                    Kokteli, lokalna hrana, zalasci sunca i opuštena atmosfera
-                    inspirirana morem i mediteranskim načinom života.
+                    Kokteli, lokalna hrana, zalasci sunca i opustena atmosfera
+                    inspirirana morem i mediteranskim nacinom zivota.
                 </p>
 
                 <div class="hero-buttons">
 
                     <a href="<?= appUrl('in2thebar') ?>" class="hero-btn primary">
-                        Istraži Bar
+                        Istrazite Bar
                     </a>
 
                     <a href="<?= shopUrl() ?>" class="hero-btn secondary">
@@ -49,15 +47,15 @@ $page = $_GET['page'] ?? 'index';
             <div class="hero-content">
 
                 <span class="hero-tag">
-                    MORE • OPREMA • LIFESTYLE
+                    MORE - OPREMA - LIFESTYLE
                 </span>
 
                 <h1>
-                    Istraži Obalni Lifestyle
+                    Istrazite obalni lifestyle
                 </h1>
 
                 <p>
-                    Premium nautička oprema, aktivan život uz more,
+                    Premium nauticka oprema, aktivan zivot uz more,
                     bike i SUP rental te proizvodi inspirirani
                     morem i avanturom.
                 </p>
@@ -65,7 +63,7 @@ $page = $_GET['page'] ?? 'index';
                 <div class="hero-buttons">
 
                     <a href="<?= shopUrl() ?>" class="hero-btn primary">
-                        Istraži Shop
+                        Istrazite Shop
                     </a>
 
                     <a href="<?= appUrl('in2thebar') ?>" class="hero-btn secondary">

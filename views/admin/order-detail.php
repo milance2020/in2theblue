@@ -37,6 +37,7 @@
             </div>
 
             <form method="POST" action="index.php?page=adminPanel&action=update_order_status">
+                <?= csrf_input() ?>
 
                 <input type="hidden" name="order_id" value="<?= (int) $order->id ?>">
 

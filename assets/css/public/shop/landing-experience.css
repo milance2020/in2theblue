@@ -1,0 +1,101 @@
+﻿/* =========================================================
+   12. SHOP LANDING - EXPERIENCE CARDS
+========================================================= */
+
+.shop-experience-section {
+    background: var(--color-bg-soft);
+    padding: var(--section-padding);
+}
+
+.experience-header {
+    text-align: center;
+    max-width: 950px;
+    margin: 0 auto 50px;
+}
+
+.experience-tag {
+    display: block;
+    color: var(--color-primary);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.experience-header h2 {
+    color: var(--color-text);
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+}
+
+.experience-header p {
+    color: var(--color-primary);
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.experience-grid {
+    max-width: 1480px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+}
+
+.experience-card {
+    background: var(--color-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+}
+
+.experience-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.experience-content {
+    padding: 24px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.experience-content h3 {
+    color: var(--color-text);
+    font-size: 24px;
+    font-weight: 900;
+    margin: 0 0 12px;
+}
+
+.experience-content p {
+    color: var(--color-primary);
+    font-size: 16px;
+    line-height: 1.55;
+    margin: 0 0 12px;
+}
+
+.experience-content a {
+    margin-top: auto;
+    display: inline-block;
+    width: fit-content;
+    background: var(--color-primary);
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 800;
+    padding: 11px 18px;
+    border-radius: 6px;
+}
+
+.experience-content a:hover {
+    background: var(--color-primary-dark);
+}
+
+

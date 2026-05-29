@@ -2,7 +2,7 @@
 
 $_output['html_model'] = 'adminPanel';
 $_output['layout'] = 'admin';
-$_output['view'] = 'admin/products-list';
+$_output['view'] = 'admin/dashboard';
 
 require_once FILE_SEO_HELPER;
 setSEO('adminPanel');
@@ -35,8 +35,13 @@ if (($_SESSION['role'] ?? '') !== 'admin') {
 // =========================================================
 $views = [
     ''  => [
-        'view'  => 'admin/orders-list',
-        'model' => 'view_orders.php',
+        'view'  => 'admin/dashboard',
+        'model' => 'dashboard.php',
+    ],
+
+    'dashboard'  => [
+        'view'  => 'admin/dashboard',
+        'model' => 'dashboard.php',
     ],
 
     'view' => [
