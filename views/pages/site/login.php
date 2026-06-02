@@ -29,6 +29,6 @@ if (!isset($_SESSION['ulogovan'])) {
     </div>
 <?php else : ?>
     <h1>Već ste prijavljeni</h1>
-    <a href="index.php?page=logout">Odjavi se</a>
+    <a href="<?= logoutUrl() ?>">Odjavi se</a>
 
 <?php endif; ?>

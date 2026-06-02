@@ -35,7 +35,7 @@ $stmt = $conn->prepare("
 ");
 
 if (!$stmt) {
-    flash_set('error', 'Greska pri pripremi upita.');
+    flash_set('error', 'Greška pri pripremi upita.');
     header("Location: index.php?page=adminPanel&view=insertUsers");
     exit;
 }
@@ -43,15 +43,15 @@ if (!$stmt) {
 $stmt->bind_param("ssss", $username, $email, $hashedPassword, $role);
 
 if ($stmt->execute()) {
-    flash_set('success', 'Korisnik je uspjesno dodan.');
+    flash_set('success', 'Korisnik je uspješno dodan.');
     header("Location: index.php?page=adminPanel&view=insertUsers");
     exit;
 }
 
 if ($conn->errno == 1062) {
-    flash_set('error', 'Taj korisnik vec postoji.');
+    flash_set('error', 'Taj korisnik već postoji.');
 } else {
-    flash_set('error', 'Greska pri dodavanju korisnika.');
+    flash_set('error', 'Greška pri dodavanju korisnika.');
 }
 
 header("Location: index.php?page=adminPanel&view=insertUsers");

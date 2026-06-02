@@ -1,4 +1,4 @@
-<form action="index.php?page=register" method="post" class="form" autocomplete="off">
+<form action="<?= appUrl('register') ?>" method="post" class="form" autocomplete="off">
 
     <h2>Registracija</h2>
 

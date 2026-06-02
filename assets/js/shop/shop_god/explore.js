@@ -56,7 +56,7 @@ static bindSizes() {
                     //const size2 = sizeSelect.value;
 
                     if (!size) {
-                        alert("Molimo odaberite velicinu!");
+                        alert("Molimo odaberite veličinu!");
                         return;
                     }
 

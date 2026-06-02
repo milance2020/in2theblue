@@ -1,56 +1,112 @@
-<!-- FEATURED NEWS -->
-<div class="news-wrapper">
-    <div class="featured-news">
+<div class="news-page">
 
-        <?php if (!empty($_SESSION['ulogovan'])): ?>
+    <header class="news-page-header">
+        <span>In2TheBlue</span>
+        <h1>Vijesti</h1>
+        <p>Novosti iz bara, shopa i smještaja na jednom mjestu.</p>
+    </header>
 
-            <input type="text" id="news-title" value="<?= htmlspecialchars($currentNews['title']) ?>">
+    <nav class="news-category-nav" aria-label="Kategorije vijesti">
+        <?php foreach ($newsCategories as $key => $label): ?>
+            <?php
+            $url = $key === ''
+                ? appUrl('news')
+                : appUrl('news') . '?' . http_build_query(['category' => $key]);
+            ?>
 
-            <textarea id="news-content"><?= htmlspecialchars($currentNews['content']) ?></textarea>
+            <a
+                href="<?= e($url) ?>"
+                class="<?= $category === $key ? 'active' : '' ?>"
+            >
+                <?= e($label) ?>
+            </a>
+        <?php endforeach; ?>
+    </nav>
 
-            <img src="<?= appUrl($currentNews['image']) ?>" style="max-width:100%; margin:10px 0;">
+    <?php if (!$currentNews): ?>
 
-            <button id="save-news" data-id="<?= $currentNews['id'] ?>">
-                Sačuvaj
-            </button>
+        <section class="news-empty">
+            <h2>Trenutno nema objavljenih vijesti.</h2>
+            <p>Vratite se uskoro, nove objave će biti prikazane ovdje.</p>
+        </section>
 
-        <?php else: ?>
+    <?php else: ?>
 
-            <h1><?= $currentNews['title'] ?></h1>
+        <article class="news-featured">
+            <?php if (!empty($currentNews['image'])): ?>
+                <div class="news-featured-image">
+                    <img
+                        src="<?= e(storedFileUrl($currentNews['image'])) ?>"
+                        alt="<?= e($currentNews['title']) ?>"
+                    >
+                </div>
+            <?php endif; ?>
 
-            <img src="<?=appUrl($currentNews['image']) ?>">
+            <div class="news-featured-content">
+                <div class="news-meta">
+                    <span><?= e($newsCategories[$currentNews['category']] ?? ucfirst($currentNews['category'] ?? 'Vijesti')) ?></span>
 
-            <p><?= nl2br($currentNews['content']) ?></p>
+                    <?php if (!empty($currentNews['created_at'])): ?>
+                        <time datetime="<?= e($currentNews['created_at']) ?>">
+                            <?= e(date('d.m.Y.', strtotime($currentNews['created_at']))) ?>
+                        </time>
+                    <?php endif; ?>
+                </div>
 
+                <h2><?= e($currentNews['title']) ?></h2>
+
+                <div class="news-article-body">
+                    <?= nl2br(e($currentNews['content'])) ?>
+                </div>
+            </div>
+        </article>
+
+        <?php if ($otherNews && $otherNews->num_rows > 0): ?>
+            <section class="news-more-section">
+                <div class="news-more-header">
+                    <span>Arhiva</span>
+                    <h2>Još vijesti</h2>
+                </div>
+
+                <div class="news-grid">
+                    <?php while ($row = $otherNews->fetch_assoc()): ?>
+                        <article class="news-card">
+                            <?php if (!empty($row['image'])): ?>
+                                <a href="<?= e(newsUrl($row)) ?>" class="news-card-image">
+                                    <img
+                                        src="<?= e(storedFileUrl($row['image'])) ?>"
+                                        alt="<?= e($row['title']) ?>"
+                                    >
+                                </a>
+                            <?php endif; ?>
+
+                            <div class="news-card-content">
+                                <div class="news-meta">
+                                    <span><?= e($newsCategories[$row['category']] ?? ucfirst($row['category'] ?? 'Vijesti')) ?></span>
+
+                                    <?php if (!empty($row['created_at'])): ?>
+                                        <time datetime="<?= e($row['created_at']) ?>">
+                                            <?= e(date('d.m.Y.', strtotime($row['created_at']))) ?>
+                                        </time>
+                                    <?php endif; ?>
+                                </div>
+
+                                <h3><?= e($row['title']) ?></h3>
+
+                                <p>
+                                    <?= e(substr(strip_tags($row['content']), 0, 140)) ?>...
+                                </p>
+
+                                <a href="<?= e(newsUrl($row)) ?>" class="news-read-more">
+                                    Pročitaj više
+                                </a>
+                            </div>
+                        </article>
+                    <?php endwhile; ?>
+                </div>
+            </section>
         <?php endif; ?>
 
-    </div>
+    <?php endif; ?>
 
-    <hr>
-
-    <!-- OLDER NEWS -->
-    <div class="news-list">
-
-        <?php while ($row = $otherNews->fetch_assoc()): ?>
-
-            <div class="news-item">
-                <h3><?= $row['title'] ?></h3>
-
-                <p><?= substr($row['content'], 0, 120) ?>...</p>
-
-                <a href="<?= newsUrl($row) ?>">
-                    Procitaj više
-                </a>
-
-            </div>
-
-        <?php endwhile; ?>
-
-    </div>
 </div>
-
-
-<script>window.APP_URLS = <?= json_encode(['adminUpdateNewsInline' => URL_ADMIN_UPDATE_NEWS_INLINE]) ?>;</script>
-<script src="<?= URL_ASSETS_JS ?>news/news.js">
-
-</script>

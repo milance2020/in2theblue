@@ -62,6 +62,6 @@ if ($stmt->execute()) {
     exit;
 }
 
-flash_set('error', 'Greska pri brisanju proizvoda.');
+flash_set('error', 'Greška pri brisanju proizvoda.');
 header("Location: index.php?page=adminPanel&view=view");
 exit;

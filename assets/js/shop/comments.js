@@ -88,7 +88,7 @@ comments.addEventListener(
 
 
             const res = await fetch(
-                `index.php?page=product&id=${productId}&action=add_reply`,
+                `${window.location.pathname}?action=add_reply`,
                 {
                     method: 'POST',
                     headers: {
@@ -194,7 +194,7 @@ comments.addEventListener(
                 commentsContainer.dataset.productId;
 
             const res = await fetch(
-                `index.php?page=product&id=${productId}&action=add_report`,
+                `${window.location.pathname}?action=add_report`,
                 {
                     method: 'POST',
 
@@ -270,7 +270,7 @@ async function loadComments(productId) {
     try {
 
         const res = await fetch(
-            `index.php?page=product&id=${productId}&action=get_comments`
+            `${window.location.pathname}?action=get_comments`
         );
 
         const data = await res.json();
@@ -494,7 +494,7 @@ if (commentForm) {
                 // =====================
 
                 const res = await fetch(
-                    `index.php?page=product&id=${productId}&action=add_comment`,
+                    `${window.location.pathname}?action=add_comment`,
                     {
                         method: 'POST',
 
@@ -539,7 +539,7 @@ if (commentForm) {
                 if (data.status === 'visible') {
 
                     showToast(
-                        'Komentar uspjesno dodan.'
+                        'Komentar uspješno dodan.'
                     );
 
 

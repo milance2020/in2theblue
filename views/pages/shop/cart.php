@@ -8,7 +8,7 @@
 
     <div id="cart-empty" class="cart-empty" style="display:none;">
         <p>Korpa je prazna</p>
-        <a href="index.php?page=explore" class="btn btn-checkout">Nazad u shop</a>
+        <a href="<?= shopUrl() ?>" class="btn btn-checkout">Nazad u shop</a>
     </div>
 
 </div>

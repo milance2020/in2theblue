@@ -17,6 +17,12 @@
         <link rel="canonical" href="<?= e($_output['canonical']) ?>">
     <?php endif; ?>
 
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= assetUrl('images/favicon/favicon-16x16.png') ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= assetUrl('images/favicon/favicon-32x32.png') ?>">
+    <link rel="icon" type="image/png" sizes="48x48" href="<?= assetUrl('images/favicon/favicon-48x48.png') ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= assetUrl('images/favicon/apple-touch-icon.png') ?>">
+    <link rel="shortcut icon" href="<?= assetUrl('images/favicon/favicon.ico') ?>">
+
     <link rel="stylesheet" href="<?= assetUrl('css/public/style.css') ?>">
     <link rel="stylesheet" href="<?= assetUrl('css/public/forms.css') ?>">
     <link rel="stylesheet" href="<?= assetUrl('css/public/tables.css') ?>">

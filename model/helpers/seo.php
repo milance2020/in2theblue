@@ -16,7 +16,7 @@ function addBreadcrumb(string $label, ?string $url = null): void
 
 function addShopBreadcrumbs(): void
 {
-    addBreadcrumb('Pocetna', appUrl('in2theshop'));
+    addBreadcrumb('Početna', appUrl('in2theshop'));
     addBreadcrumb('In2TheShop', shopUrl());
 }
 
@@ -38,8 +38,8 @@ function pageTitle(string $page): string
 function genderLabel(string $gender): string
 {
     return match (strtolower($gender)) {
-        'male'   => 'Musko',
-        'female' => 'Zensko',
+        'male'   => 'Muško',
+        'female' => 'Žensko',
         'unisex' => 'Unisex',
         default  => ucfirst($gender),
     };
@@ -57,15 +57,15 @@ function setSEO(string $type, array $data = []): void
     $_output['meta_robots'] = $data['robots'] ?? 'index, follow';
     $_output['breadcrumbs'] = [];
 
-    $exploreUrl = pageUrl('explore');
-    $cartUrl = pageUrl('cart-checkout');
+    $exploreUrl = shopUrl();
+    $cartUrl = appUrl('cart');
 
     if ($type === 'shop') {
         $_output['meta_title'] = 'In2TheShop';
         $_output['meta_description'] = 'Online shop sa modernim proizvodima.';
-        $_output['canonical'] = pageUrl('shop');
+        $_output['canonical'] = appUrl('in2theshop');
 
-        addBreadcrumb('Pocetna', pageUrl('index'));
+        addBreadcrumb('Početna', appUrl('in2thebar'));
         addBreadcrumb('In2TheShop');
 
         return;
@@ -86,9 +86,7 @@ function setSEO(string $type, array $data = []): void
         if (!empty($data['category']) && !empty($data['category_slug'])) {
             addBreadcrumb(
                 $data['category'],
-                pageUrl('explore', [
-                    'category' => $data['category_slug']
-                ])
+                appUrl('shop/' . $data['category_slug'])
             );
         }
 
@@ -120,7 +118,7 @@ function setSEO(string $type, array $data = []): void
         }
 
         $_output['meta_title'] = $title;
-        $_output['meta_description'] = 'Istrazite nasu kolekciju proizvoda.';
+        $_output['meta_description'] = 'Istražite našu kolekciju proizvoda.';
         $_output['canonical'] = $data['url'] ?? $exploreUrl;
 
         addShopBreadcrumbs();
@@ -134,7 +132,7 @@ function setSEO(string $type, array $data = []): void
 
             addBreadcrumb(
                 $categoryLabel,
-                $isLast ? null : pageUrl('explore', ['category' => $category])
+                $isLast ? null : appUrl('shop/' . $category)
             );
         }
 
@@ -148,7 +146,7 @@ function setSEO(string $type, array $data = []): void
 
             addBreadcrumb(
                 genderLabel($gender),
-                $isLast ? null : pageUrl('explore', $genderParams)
+                $isLast ? null : shopUrl($genderParams)
             );
         }
 
@@ -172,26 +170,26 @@ function setSEO(string $type, array $data = []): void
     }
 
     if ($type === 'checkout') {
-        $_output['meta_title'] = 'Narucivanje | Shop';
+        $_output['meta_title'] = 'Naručivanje | Shop';
         $_output['meta_description'] = '';
         $_output['meta_robots'] = 'noindex, nofollow';
-        $_output['canonical'] = pageUrl('order');
+        $_output['canonical'] = appUrl('order');
 
         addShopBreadcrumbs();
         addBreadcrumb('Korpa', $cartUrl);
-        addBreadcrumb('Narucivanje');
+        addBreadcrumb('Naručivanje');
 
         return;
     }
 
     if ($type === 'order_success') {
-        $_output['meta_title'] = 'Narudzba uspjesna | Shop';
-        $_output['meta_description'] = 'Vasa narudzba je uspjesno kreirana.';
+        $_output['meta_title'] = 'Narudžba uspješna | Shop';
+        $_output['meta_description'] = 'Vaša narudžba je uspješno kreirana.';
         $_output['meta_robots'] = 'noindex, follow';
 
         addShopBreadcrumbs();
         addBreadcrumb('Korpa', $cartUrl);
-        addBreadcrumb('Uspjesno naruceno');
+        addBreadcrumb('Uspješno naručeno');
 
         return;
     }

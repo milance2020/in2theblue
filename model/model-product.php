@@ -690,7 +690,5 @@ setSEO('product', [
     'description' => $product['description'],
     'category' => $product['category_label'],
     'category_slug' => $product['category_slug'],
-    'url' => pageUrl('product', [
-        'id' => $product['id']
-    ]),
+    'url' => productUrl($product),
 ]);

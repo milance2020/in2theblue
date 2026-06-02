@@ -27,9 +27,9 @@
             <hr>
             <?php $page = $_GET['page'] ?? ''; ?>
             <?php if ($page !== 'adminPanel'): ?>
-                <a href="<?= URL_INDEX ?>?page=login" >Log in</a>
+                <a href="<?= appUrl('login') ?>">Log in</a>
             <?php else: ?>
-                <a href="<?= URL_INDEX ?>?page=login&action=logout" id="logout-admin">Log out</a>
+                <a href="<?= logoutUrl() ?>" id="logout-admin">Log out</a>
             <?php endif; ?>
             </ul>
         </div>

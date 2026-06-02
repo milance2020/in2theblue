@@ -39,6 +39,6 @@ if ($stmt->execute()) {
     exit;
 }
 
-flash_set('error', 'Greska pri brisanju vijesti.');
+flash_set('error', 'Greška pri brisanju vijesti.');
 header("Location: index.php?page=adminPanel&view=viewNews");
 exit;

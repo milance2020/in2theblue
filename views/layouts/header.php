@@ -15,18 +15,18 @@ $page = $_GET['page'] ?? 'index';
                 </span>
 
                 <h1>
-                    Mjesto gdje ljeto ostaje duze
+                    Mjesto gdje ljeto ostaje duže
                 </h1>
 
                 <p>
-                    Kokteli, lokalna hrana, zalasci sunca i opustena atmosfera
-                    inspirirana morem i mediteranskim nacinom zivota.
+                    Kokteli, lokalna hrana, zalasci sunca i opuštena atmosfera
+                    inspirirana morem i mediteranskim načinom života.
                 </p>
 
                 <div class="hero-buttons">
 
                     <a href="<?= appUrl('in2thebar') ?>" class="hero-btn primary">
-                        Istrazite Bar
+                        Istražite Bar
                     </a>
 
                     <a href="<?= shopUrl() ?>" class="hero-btn secondary">
@@ -51,11 +51,11 @@ $page = $_GET['page'] ?? 'index';
                 </span>
 
                 <h1>
-                    Istrazite obalni lifestyle
+                    Istražite obalni lifestyle
                 </h1>
 
                 <p>
-                    Premium nauticka oprema, aktivan zivot uz more,
+                    Premium nautička oprema, aktivan život uz more,
                     bike i SUP rental te proizvodi inspirirani
                     morem i avanturom.
                 </p>
@@ -63,7 +63,7 @@ $page = $_GET['page'] ?? 'index';
                 <div class="hero-buttons">
 
                     <a href="<?= shopUrl() ?>" class="hero-btn primary">
-                        Istrazite Shop
+                        Istražite Shop
                     </a>
 
                     <a href="<?= appUrl('in2thebar') ?>" class="hero-btn secondary">

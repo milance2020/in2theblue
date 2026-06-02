@@ -2,12 +2,12 @@
     <tr>
         <th>id</th>
         <th>Naslov</th>
-        <th>Sadrzaj</th>
+        <th>Sadržaj</th>
         <th>Slika</th>
         <th>Datum kreiranja</th>
-        <th>Datum azuriranja</th>
+        <th>Datum ažuriranja</th>
         <th>Uredi</th>
-        <th>Obrisi</th>
+        <th>Obriši</th>
     </tr>
 
     <?php if (!empty($news)): ?>
@@ -25,7 +25,7 @@
                     <a href="index.php?page=adminPanel&view=updateNews&id=<?= (int) $row->id ?>">Uredi</a>
                 </td>
                 <td>
-                    <a href="index.php?page=adminPanel&action=deleteNews&id=<?= (int) $row->id ?>&<?= csrf_url() ?>" class="delete-btn">Obrisi</a>
+                    <a href="index.php?page=adminPanel&action=deleteNews&id=<?= (int) $row->id ?>&<?= csrf_url() ?>" class="delete-btn">Obriši</a>
                 </td>
             </tr>
         <?php endforeach; ?>

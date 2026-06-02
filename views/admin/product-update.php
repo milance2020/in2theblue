@@ -16,7 +16,7 @@ $sizes = $productSizes ?? [];
 
     <input type="hidden" name="id" value="<?= e($product->id ?? 0) ?>">
 
-    <label>Sifra proizvoda</label>
+    <label>Šifra proizvoda</label>
     <input type="text"
            name="code"
            value="<?= e($sku) ?>"
@@ -38,7 +38,7 @@ $sizes = $productSizes ?? [];
            name="price"
            value="<?= e($price) ?>">
 
-    <h3>Stock po velicinama</h3>
+    <h3>Stock po veličinama</h3>
 
     <div class="size-grid">
         <?php foreach ($sizes as $s): ?>
@@ -54,6 +54,6 @@ $sizes = $productSizes ?? [];
     </div>
 
     <button type="submit">
-        Sacuvaj promjene
+        Sačuvaj promjene
     </button>
 </form>

@@ -66,6 +66,6 @@ foreach ($stock as $size => $qty) {
     }
 }
 
-flash_set('success', 'Proizvod je uspjesno azuriran.');
+flash_set('success', 'Proizvod je uspješno ažuriran.');
 header("Location: index.php?page=adminPanel&view=update&id=" . $id);
 exit;

@@ -18,7 +18,7 @@ $allowedStatuses = [
 ];
 
 if ($orderId <= 0 || !in_array($newStatus, $allowedStatuses, true)) {
-    flash_set('error', 'Neispravan zahtjev za narudzbu.');
+    flash_set('error', 'Neispravan zahtjev za narudžbu.');
     header("Location: index.php?page=adminPanel&view=orders");
     exit;
 }
@@ -39,7 +39,7 @@ try {
     $order = $stmt->get_result()->fetch_assoc();
 
     if (!$order) {
-        throw new Exception('Narudzba nije pronadjena.');
+        throw new Exception('Narudžba nije pronađena.');
     }
 
     $shouldReduceStock =
@@ -103,7 +103,7 @@ try {
 
     $conn->commit();
 
-    flash_set('success', 'Status narudzbe je azuriran.');
+    flash_set('success', 'Status narudžbe je ažuriran.');
     header("Location: index.php?page=adminPanel&view=order_info&id=" . $orderId);
     exit;
 } catch (Exception $e) {

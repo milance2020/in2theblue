@@ -4,7 +4,7 @@
     <label for="title">Naslov</label>
     <input type="text" name="title" id="title" required>
 
-    <label for="content">Sadrzaj</label>
+    <label for="content">Sadržaj</label>
     <textarea name="content" id="content" rows="6" required></textarea>
 
     <label for="image">Slika</label>
@@ -18,5 +18,5 @@
         <option value="shop">Shop</option>
     </select>
 
-    <input type="submit" value="Spremi clanak">
+    <input type="submit" value="Spremi članak">
 </form>

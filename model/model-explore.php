@@ -155,7 +155,7 @@ setSEO('explore', [
     'category'        => $category,
     'category_label'  => $categoryLabel,
     'gender'          => $gender,
-    'url'             => pageUrl('explore', $canonicalParams),
+    'url'             => shopUrl($canonicalParams),
 ]);
 
 ?>

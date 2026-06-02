@@ -2,12 +2,12 @@
     <div class="dashboard-header">
         <span>Admin Panel</span>
         <h1>Dashboard</h1>
-        <p>Brzi pregled najvaznijih stvari u shopu.</p>
+        <p>Brzi pregled najvažnijih stvari u shopu.</p>
     </div>
 
     <div class="dashboard-cards">
         <a href="index.php?page=adminPanel&view=orders&status=Pending" class="dashboard-card">
-            <span>Narudzbe na cekanju</span>
+            <span>Narudžbe na čekanju</span>
             <strong><?= (int) $dashboard['orders_pending'] ?></strong>
             <small>Otvori narudzbe</small>
         </a>
@@ -19,13 +19,13 @@
         </a>
 
         <a href="index.php?page=adminPanel&view=viewComments" class="dashboard-card">
-            <span>Komentari na cekanju</span>
+            <span>Komentari na čekanju</span>
             <strong><?= (int) $dashboard['comments_pending'] ?></strong>
             <small>Moderacija komentara</small>
         </a>
 
         <a href="index.php?page=adminPanel&view=viewMessages&status=Unread" class="dashboard-card">
-            <span>Neprocitane poruke</span>
+            <span>Nepročitane poruke</span>
             <strong><?= (int) $dashboard['messages_unread'] ?></strong>
             <small>Pregled poruka</small>
         </a>

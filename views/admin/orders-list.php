@@ -1,4 +1,4 @@
-<h1>Narudzbe</h1>
+<h1>Narudžbe</h1>
 <div class="order-filters">
 
     <a 
@@ -51,7 +51,7 @@
         <th>Musterija</th>
         <th>Total</th>
         <th>Status</th>
-        <th>Vrijeme Narudzbe</th>
+        <th>Vrijeme Narudžbe</th>
     </tr>
     <?php if (!empty($orders)): ?>
         <?php foreach ($orders as $row): ?>

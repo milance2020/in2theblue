@@ -1,7 +1,7 @@
 <div class="news-article">
 
     <div class="news-picture">
-        <img src="<?= $news['image'] ?>" alt="<?= htmlspecialchars($news['title']) ?>">
+        <img src="<?= e(storedFileUrl($news['image'])) ?>" alt="<?= e($news['title']) ?>">
     </div>
 
     <div class="news-content">
@@ -11,14 +11,14 @@
         </span>
 
         <h2>
-            <?= htmlspecialchars($news['title']) ?>
+            <?= e($news['title']) ?>
         </h2>
 
         <p>
-            <?= nl2br(substr($news['content'], 0, 180)) ?>...
+            <?= nl2br(e(substr(strip_tags($news['content']), 0, 180))) ?>...
         </p>
 
-        <a href="<?= appUrl('news') ?>" class="news-btn">
+        <a href="<?= e(newsUrl($news)) ?>" class="news-btn">
             Pročitaj više
         </a>
 

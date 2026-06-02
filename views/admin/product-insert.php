@@ -1,7 +1,7 @@
 <form action="index.php?page=adminPanel&action=insert" method="post" enctype="multipart/form-data" class="form">
     <?= csrf_input() ?>
 
-    <label>Sifra proizvoda</label>
+    <label>Šifra proizvoda</label>
     <input type="text" name="sku" required><br>
 
     <label>Naziv proizvoda</label>
@@ -12,15 +12,15 @@
         <option value="1">Majica</option>
         <option value="2">Duks</option>
         <option value="3">Dukserica</option>
-        <option value="4">Sorc</option>
-        <option value="5">Hlace</option>
+        <option value="4">Šorc</option>
+        <option value="5">Hlače</option>
         <option value="6">Ostalo</option>
     </select><br>
 
     <label>Pol</label>
     <select name="gender" required>
-        <option value="male">Musko</option>
-        <option value="female">Zensko</option>
+        <option value="male">Muško</option>
+        <option value="female">Žensko</option>
         <option value="unisex">Unisex</option>
     </select><br>
 
@@ -35,7 +35,7 @@
 
     <hr>
 
-    <h3>Stock po velicinama</h3>
+    <h3>Stock po veličinama</h3>
 
     <label>S</label>
     <input type="number" name="size_s" value="0"><br>

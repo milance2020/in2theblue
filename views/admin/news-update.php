@@ -11,7 +11,7 @@ $category = $product->category ?? '';
     <label for="title">Naslov</label>
     <input type="text" name="title" id="title" value="<?= e($title) ?>" required>
 
-    <label for="content">Sadrzaj</label>
+    <label for="content">Sadržaj</label>
     <textarea name="content" id="content" rows="6" required><?= e($content) ?></textarea>
 
     <label for="image">Slika</label>
@@ -25,5 +25,5 @@ $category = $product->category ?? '';
         <option value="shop" <?= $category === 'shop' ? 'selected' : '' ?>>Shop</option>
     </select>
 
-    <input type="submit" value="Spremi clanak">
+    <input type="submit" value="Spremi članak">
 </form>

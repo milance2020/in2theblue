@@ -16,7 +16,7 @@ if (
     $_SESSION['ulogovan'] === USER_LEVEL_ANONYMOUS
 ) {
 
-    header('Location: index.php?page=login');
+    header('Location: ' . appUrl('login'));
     exit;
 }
 

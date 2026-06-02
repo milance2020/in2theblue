@@ -40,11 +40,11 @@ $stmt = $conn->prepare("
 $stmt->bind_param("ssss", $title, $content, $imagePathForDb, $category);
 
 if ($stmt->execute()) {
-    flash_set('success', 'Vijest je uspjesno dodana.');
+    flash_set('success', 'Vijest je uspješno dodana.');
     header("Location: /v5/index.php?page=adminPanel&view=viewNews");
     exit;
 }
 
-flash_set('error', 'Greska pri dodavanju vijesti.');
+flash_set('error', 'Greška pri dodavanju vijesti.');
 header("Location: /v5/index.php?page=adminPanel&view=insertNews");
 exit;

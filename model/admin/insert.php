@@ -104,6 +104,6 @@ foreach ($sizes as $size => $stock) {
 // =====================
 // DONE
 // =====================
-flash_set('success', 'Proizvod je uspjesno dodan.');
+flash_set('success', 'Proizvod je uspješno dodan.');
 header("Location: /v5/index.php?page=adminPanel&view=view");
 exit;

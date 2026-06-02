@@ -7,6 +7,35 @@ function appUrl(string $path = ''): string
 
 function pageUrl(string $page, array $params = []): string
 {
+    $cleanPaths = [
+        'index' => 'in2thebar',
+        'shop' => 'in2theshop',
+        'explore' => 'shop',
+        'cart-checkout' => 'cart',
+        'order' => 'order',
+        'login' => 'login',
+        'register' => 'register',
+        'contact' => 'contact',
+        'news' => 'news',
+    ];
+
+    if (isset($cleanPaths[$page])) {
+        $url = appUrl($cleanPaths[$page]);
+
+        if (!empty($params)) {
+            $cleanParams = array_filter(
+                $params,
+                fn($value) => $value !== null && $value !== ''
+            );
+
+            if (!empty($cleanParams)) {
+                $url .= '?' . http_build_query($cleanParams);
+            }
+        }
+
+        return $url;
+    }
+
     $url = URL_INDEX . '?page=' . rawurlencode($page);
 
     foreach ($params as $key => $value) {
@@ -28,9 +57,7 @@ function productUrl(array $product): string
         );
     }
 
-    return pageUrl('product', [
-        'id' => $product['id'] ?? null
-    ]);
+    return pageUrl('product', ['id' => $product['id'] ?? null]);
 }
 
 function shopUrl(array $params = []): string
@@ -52,6 +79,25 @@ function categoryUrl(array $category): string
 function assetUrl(string $path): string
 {
     return appUrl('assets/' . ltrim($path, '/'));
+}
+
+function storedFileUrl(?string $path): string
+{
+    $path = trim($path ?? '');
+
+    if ($path === '') {
+        return '';
+    }
+
+    if (preg_match('/^https?:\/\//', $path)) {
+        return $path;
+    }
+
+    if (str_starts_with($path, URL_BASE)) {
+        return $path;
+    }
+
+    return appUrl($path);
 }
 
 function logoutUrl(): string

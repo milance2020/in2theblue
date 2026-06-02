@@ -30,11 +30,11 @@ $stmt = $conn->prepare("
 $stmt->bind_param("sssi", $title, $content, $category, $id);
 
 if ($stmt->execute()) {
-    flash_set('success', 'Vijest je uspjesno azurirana.');
-    header("Location: index.php?page=news&id=" . $id);
+    flash_set('success', 'Vijest je uspješno ažurirana.');
+    header("Location: " . newsUrl(['id' => $id]));
     exit;
 }
 
-flash_set('error', 'Greska pri azuriranju vijesti.');
+flash_set('error', 'Greška pri ažuriranju vijesti.');
 header("Location: index.php?page=adminPanel&view=updateNews&id=" . $id);
 exit;
