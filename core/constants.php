@@ -32,7 +32,6 @@ define('URL_BASE', '/v5/');
 define('URL_ASSETS', URL_BASE . 'assets/');
 define('URL_INDEX', URL_BASE . 'index.php');
 define('URL_API_CART', URL_BASE . 'api/cart.php');
-define('URL_ADMIN_UPDATE_NEWS_INLINE', URL_BASE . 'model/admin/update_news_inline.php');
 
 define('URL_ASSETS_CSS_PUBLIC', URL_ASSETS . 'css/public/');
 define('URL_ASSETS_CSS_ADMIN', URL_ASSETS . 'css/admin/');
@@ -54,6 +53,8 @@ define('FILE_CART_HELPER', DIR_MODEL_HELPERS . 'cart.php');
 define('FILE_COMMENT_MODERATION',DIR_MODEL_HELPERS . 'commentModeration.php');
 define('FILE_REPORT_MODERATION',DIR_MODEL_HELPERS . 'reportService.php');
 define('FILE_URL_HELPER', DIR_MODEL_HELPERS . 'urlHelper.php');
+define('FILE_PRODUCT_FUNCTIONS', DIR_MODEL_HELPERS . 'product-functions.php');
+define('FILE_SITE_CONTENT_HELPER', DIR_MODEL_HELPERS . 'siteContent.php');
 
 define('FILE_API_CART', DIR_MODEL_API . 'api-cart.php');
 define('FILE_API_CART_ENDPOINT', DIR_API . 'cart.php');

@@ -4,18 +4,22 @@
         ✓
     </div>
 
-    <h1>Order Successful</h1>
+    <h1>Narudžba je uspješna</h1>
 
     <p>
         Hvala na narudžbi. Vaša narudžba je uspješno zaprimljena.
     </p>
 
     <p class="order-id">
-        Order ID: #<?= $orderId ?? '' ?>
+        ID narudžbe: #<?= (int) $orderId ?>
     </p>
 
-    <a href="<?= appUrl('shop') ?>" class="continue-shopping">
-        Continue Shopping
+    <p class="order-total">
+        Ukupno: <?= number_format((float) $order['total_price'], 2) ?> €
+    </p>
+
+    <a href="<?= shopUrl() ?>" class="continue-shopping">
+        Nastavi sa kupovinom
     </a>
 
 </div>

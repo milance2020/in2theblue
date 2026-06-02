@@ -1,6 +1,6 @@
 <section class="admin-dashboard">
     <div class="dashboard-header">
-        <span>Admin Panel</span>
+        <span>Upravljački sustav</span>
         <h1>Dashboard</h1>
         <p>Brzi pregled najvažnijih stvari u shopu.</p>
     </div>

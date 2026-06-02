@@ -11,7 +11,7 @@
                 Početna
             </a>
             <a href="<?= shopUrl() ?>" class="error-btn">
-                Shop
+                Prodavnica
             </a>
         </div>
     </div>

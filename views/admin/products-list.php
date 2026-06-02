@@ -1,5 +1,7 @@
 <h1>Pregled proizvoda</h1>
 
+<?php $isAdmin = ($_SESSION['role'] ?? '') === 'admin'; ?>
+
 <table class="products-table">
     <tr>
         <th>id</th>
@@ -13,8 +15,10 @@
         <th>Slika</th>
         <th>Datum kreiranja</th>
         <th>Datum ažuriranja</th>
-        <th>Uredi</th>
-        <th>Obriši</th>
+        <?php if ($isAdmin): ?>
+            <th>Uredi</th>
+            <th>Obriši</th>
+        <?php endif; ?>
     </tr>
 
     <?php if (!empty($products)): ?>
@@ -33,19 +37,22 @@
                 </td>
                 <td><?= e($row->created_at) ?></td>
                 <td><?= e($row->updated_at) ?></td>
-                <td>
-                    <a href="index.php?page=adminPanel&view=update&id=<?= (int) $row->id ?>">Uredi</a>
-                </td>
-                <td>
-                    <a href="index.php?page=adminPanel&action=delete&id=<?= (int) $row->id ?>&<?= csrf_url() ?>" class="delete-btn">Obriši</a>
-                </td>
+                <?php if ($isAdmin): ?>
+                    <td>
+                        <a href="index.php?page=adminPanel&view=update&id=<?= (int) $row->id ?>">Uredi</a>
+                    </td>
+                    <td>
+                        <a href="index.php?page=adminPanel&action=delete&id=<?= (int) $row->id ?>&<?= csrf_url() ?>" class="delete-btn">Obriši</a>
+                    </td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
     <?php else: ?>
         <tr>
-            <td colspan="13">Nema proizvoda</td>
+            <td colspan="<?= $isAdmin ? 13 : 11 ?>">Nema proizvoda</td>
         </tr>
     <?php endif; ?>
+
 </table>
 
 <script src="<?= URL_ASSETS_JS ?>delete_btn.js"></script>

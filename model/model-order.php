@@ -6,150 +6,165 @@ $_output['breadcrumbs_enabled'] = true;
 
 require_once FILE_CONNECT;
 require_once FILE_SEO_HELPER;
+require_once FILE_CART_HELPER;
 
 $cart = $_SESSION['cart'] ?? [];
-
-$items = [];
+$items = cartGet($conn);
 $total = 0;
+$errors = [];
 
-// =========================================================
-// BUILD ORDER PREVIEW (READ ONLY CART → DB ENRICHMENT)
-// =========================================================
+$formData = [
+    'full_name' => '',
+    'email' => '',
+    'phone' => '',
+    'address' => '',
+    'city' => '',
+    'zip_code' => '',
+    'country' => '',
+];
 
-if (!empty($cart)) {
-
-    $stmt = $conn->prepare("
-        SELECT id, name, price, image_path
-        FROM products2
-        WHERE id = ?
-    ");
-
-    foreach ($cart as $productId => $sizes) {
-
-        $stmt->bind_param("i", $productId);
-        $stmt->execute();
-
-        $product = $stmt->get_result()->fetch_assoc();
-
-        if (!$product) continue;
-
-        foreach ($sizes as $size => $qty) {
-
-            $subtotal = $product['price'] * $qty;
-
-            $items[] = [
-                'id' => $product['id'],
-                'name' => $product['name'],
-                'price' => $product['price'],
-                'qty' => $qty,
-                'size' => $size,
-                'subtotal' => $subtotal,
-                'image' => $product['image_path']
-            ];
-
-            $total += $subtotal;
-        }
-    }
+foreach ($items as $item) {
+    $total += (float) $item['subtotal'];
 }
 
 // =========================================================
-// ORDER SUBMIT (WRITE ACTION)
+// ORDER SUBMIT
 // =========================================================
 
-$errors = [];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify_or_die();
 
-    $name    = trim($_POST['full_name'] ?? '');
-    $email   = trim($_POST['email'] ?? '');
-    $phone   = trim($_POST['phone'] ?? '');
-    $address = trim($_POST['address'] ?? '');
-    $city    = trim($_POST['city'] ?? '');
-    $zip     = trim($_POST['zip_code'] ?? '');
-    $country = trim($_POST['country'] ?? '');
-
-    // -------------------------
-    // VALIDATION
-    // -------------------------
-
-    if (empty($cart)) {
-        $errors[] = "Korpa je prazna";
+    foreach ($formData as $key => $value) {
+        $formData[$key] = trim($_POST[$key] ?? '');
     }
 
-    if ($name === '') {
-        $errors[] = "Ime je obavezno";
+    if (empty($cart) || empty($items)) {
+        $errors[] = 'Korpa je prazna.';
     }
 
-    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Email nije validan";
+    if ($formData['full_name'] === '') {
+        $errors[] = 'Ime i prezime su obavezni.';
     }
 
-    // =========================================================
-    // SAVE ORDER (ONLY IF VALID)
-    // =========================================================
+    if ($formData['email'] === '' || !filter_var($formData['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Email nije validan.';
+    }
+
+    if ($formData['phone'] === '') {
+        $errors[] = 'Telefon je obavezan.';
+    }
+
+    if ($formData['address'] === '') {
+        $errors[] = 'Adresa je obavezna.';
+    }
+
+    if ($formData['city'] === '') {
+        $errors[] = 'Grad je obavezan.';
+    }
+
+    if ($formData['country'] === '') {
+        $errors[] = 'Država je obavezna.';
+    }
+
+    foreach ($items as $item) {
+        $stock = getStock($conn, (int) $item['id'], (string) $item['size']);
+
+        if ((int) $item['qty'] > $stock) {
+            $errors[] = 'Nema dovoljno zaliha za proizvod: ' . $item['name'] . ' (' . $item['size'] . ').';
+        }
+    }
 
     if (empty($errors)) {
+        $conn->begin_transaction();
 
-        // CUSTOMER
-        $stmt = $conn->prepare("
-            INSERT INTO customers
-            (full_name, email, phone, address, city, zip, country)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
+        try {
+            $stmt = $conn->prepare("
+                INSERT INTO customers
+                (full_name, email, phone, address, city, zip, country)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ");
 
-        $stmt->bind_param(
-            "sssssss",
-            $name,
-            $email,
-            $phone,
-            $address,
-            $city,
-            $zip,
-            $country
-        );
+            if (!$stmt) {
+                throw new Exception('Greška pri pripremi kupca.');
+            }
 
-        $stmt->execute();
-        $customerId = $stmt->insert_id;
-
-        // ORDER
-        $stmt = $conn->prepare("
-            INSERT INTO orders
-            (customer_id, total_price)
-            VALUES (?, ?)
-        ");
-
-        $stmt->bind_param("id", $customerId, $total);
-        $stmt->execute();
-
-        $orderId = $stmt->insert_id;
-
-        // ORDER ITEMS
-        $stmtItem = $conn->prepare("
-            INSERT INTO order_items
-            (order_id, product_id, size, quantity, price, subtotal)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ");
-
-        foreach ($items as $item) {
-
-            $stmtItem->bind_param(
-                "iisidd",
-                $orderId,
-                $item['id'],
-                $item['size'],
-                $item['qty'],
-                $item['price'],
-                $item['subtotal']
+            $stmt->bind_param(
+                'sssssss',
+                $formData['full_name'],
+                $formData['email'],
+                $formData['phone'],
+                $formData['address'],
+                $formData['city'],
+                $formData['zip_code'],
+                $formData['country']
             );
 
-            $stmtItem->execute();
+            if (!$stmt->execute()) {
+                throw new Exception('Kupac nije spremljen.');
+            }
+
+            $customerId = $stmt->insert_id;
+
+            $stmt = $conn->prepare("
+                INSERT INTO orders
+                (customer_id, total_price)
+                VALUES (?, ?)
+            ");
+
+            if (!$stmt) {
+                throw new Exception('Greška pri pripremi narudžbe.');
+            }
+
+            $stmt->bind_param('id', $customerId, $total);
+
+            if (!$stmt->execute()) {
+                throw new Exception('Narudžba nije spremljena.');
+            }
+
+            $orderId = $stmt->insert_id;
+
+            $stmtItem = $conn->prepare("
+                INSERT INTO order_items
+                (order_id, product_id, size, quantity, price, subtotal)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ");
+
+            if (!$stmtItem) {
+                throw new Exception('Greška pri pripremi stavki narudžbe.');
+            }
+
+            foreach ($items as $item) {
+                $productId = (int) $item['id'];
+                $size = (string) $item['size'];
+                $qty = (int) $item['qty'];
+                $price = (float) $item['price'];
+                $subtotal = (float) $item['subtotal'];
+
+                $stmtItem->bind_param(
+                    'iisidd',
+                    $orderId,
+                    $productId,
+                    $size,
+                    $qty,
+                    $price,
+                    $subtotal
+                );
+
+                if (!$stmtItem->execute()) {
+                    throw new Exception('Stavka narudžbe nije spremljena.');
+                }
+            }
+
+            $conn->commit();
+
+            unset($_SESSION['cart']);
+
+            header('Location: ' . orderSuccessUrl($orderId));
+            exit;
+        } catch (Exception $e) {
+            $conn->rollback();
+            $errors[] = $e->getMessage();
         }
-
-        // CLEAR CART
-        unset($_SESSION['cart']);
-
-        header("Location: " . orderSuccessUrl($orderId));
-        exit;
     }
 }
 

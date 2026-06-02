@@ -107,21 +107,21 @@ exit;
     // =========================
     // ROLE ROUTING
     // =========================
-    if ($user['role'] === 'admin') {
+    if ($user['role'] === 'admin' || $user['role'] === 'moderator') {
 
         header('Location: index.php?page=adminPanel');
         $_SESSION['ulogovan'] = USER_LEVEL_ADMIN;
 
     } elseif ($user['role'] === 'user') {
 
-       header("Location: " . shopUrl());
+        header("Location: " . shopUrl());
         $_SESSION['ulogovan'] = USER_LEVEL_USER;
 
     } else {
 
         // fallback role
         $_SESSION['ulogovan'] = USER_LEVEL_ANONYMOUS;
-       header('Location: ' . pageUrl('index'));
+        header('Location: ' . pageUrl('index'));
     }
 
     exit;

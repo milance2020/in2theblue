@@ -8,10 +8,10 @@
 
         <div class="error-actions">
             <a href="<?= appUrl('login') ?>" class="error-btn primary">
-                Log in
+                Prijava
             </a>
             <a href="<?= shopUrl() ?>" class="error-btn">
-                Shop
+                Prodavnica
             </a>
         </div>
     </div>

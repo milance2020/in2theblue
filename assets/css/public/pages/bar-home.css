@@ -88,14 +88,14 @@
 ========================================================= */
 
 .bar-offer-grid {
-    max-width: 1480px;
+    max-width: 1180px;
 
     margin: 0 auto;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 26px;
+    gap: 22px;
 }
 
 .bar-offer-card {
@@ -109,14 +109,14 @@
 }
 
 .bar-offer-img {
-    height: 240px;
+    height: 190px;
 
     background-size: cover;
     background-position: center;
 }
 
 .bar-offer-content {
-    padding: 24px;
+    padding: 20px;
 }
 
 .bar-offer-content h3 {
@@ -124,7 +124,7 @@
 
     color: #252525;
 
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 900;
 }
 
@@ -345,15 +345,15 @@
     }
 
     .bar-offer-img {
-        height: 260px;
+        height: 220px;
     }
 
     .bar-offer-content {
-        padding: 28px;
+        padding: 22px;
     }
 
     .bar-offer-content h3 {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .bar-story-btn,

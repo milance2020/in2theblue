@@ -46,6 +46,48 @@ function require_admin(): void
     }
 }
 
+function isAdmin(): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return !empty($_SESSION['ulogovan']) &&
+        ($_SESSION['role'] ?? '') === 'admin';
+}
+
+function isModerator(): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return !empty($_SESSION['ulogovan']) &&
+        in_array($_SESSION['role'] ?? '', ['admin', 'moderator'], true);
+}
+
+function require_moderator(): void
+{
+    if (!isModerator()) {
+        http_response_code(403);
+        exit('Zabranjen pristup');
+    }
+}
+
+function currentRole(): string
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return $_SESSION['role'] ?? '';
+}
+
+function roleCanAccess(array $allowedRoles): bool
+{
+    return in_array(currentRole(), $allowedRoles, true);
+}
+
 function flash_set(string $type, string $message): void
 {
     $_SESSION['flash'][] = [

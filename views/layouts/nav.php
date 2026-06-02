@@ -32,12 +32,14 @@
     <link rel="stylesheet" href="<?= assetUrl('css/admin/adminPanel.css') ?>">
     <link rel="stylesheet" href="<?= assetUrl('css/admin/order_info.css') ?>">
 
-    <script>window.APP_URLS = <?= json_encode(['apiCart' => URL_API_CART]) ?>;</script>
     <script src="<?= URL_ASSETS_JS_SHOP ?>cart.service.js"></script>
     <script src="<?= URL_ASSETS_JS_SHOP ?>cart.ui.js"></script>
 </head>
 
-<body data-logged-in="<?= !empty($_SESSION['ulogovan']) ? '1' : '0' ?>">
+<body
+    data-logged-in="<?= !empty($_SESSION['ulogovan']) ? '1' : '0' ?>"
+    data-api-cart-url="<?= e(URL_API_CART) ?>"
+>
 
     <?php
     $page = $_GET['page'] ?? '';
@@ -68,7 +70,7 @@
             <a href="<?= appUrl('in2thebar') ?>">In2TheBar</a>
             <a href="<?= appUrl('news') ?>">Vijesti</a>
 
-            <?php if ($isLoggedIn && $userRole === 'admin'): ?>
+            <?php if ($isLoggedIn && in_array($userRole, ['admin', 'moderator'], true)): ?>
                 <a href="<?= pageUrl('adminPanel') ?>">Admin Panel</a>
             <?php endif; ?>
         </div>
@@ -91,7 +93,7 @@
             <?php if ($page === 'explore' || $page === 'product'): ?>
                 <div class="cart-wrapper">
                     <a href="#" class="cart-icon">
-                        Cart
+                        Korpa
                         <span class="cart-count">0</span>
                     </a>
 
@@ -100,7 +102,7 @@
 
                         <div class="cart-footer">
                             <a href="<?= appUrl('cart') ?>">
-                                View cart
+                                Pregledaj korpu
                             </a>
                         </div>
                     </div>
@@ -111,32 +113,4 @@
 
 </nav>
 
-<script>
-const nav = document.querySelector('.site-nav');
-const navToggle = document.querySelector('.nav-toggle');
-
-if (nav && navToggle) {
-    navToggle.addEventListener('click', function () {
-        nav.classList.toggle('open');
-    });
-}
-
-const cartWrapper = document.querySelector('.cart-wrapper');
-
-if (cartWrapper) {
-    cartWrapper.addEventListener('click', function (e) {
-        if (window.innerWidth > 900) {
-            return;
-        }
-
-        const cartIcon = e.target.closest('.cart-icon');
-
-        if (!cartIcon) {
-            return;
-        }
-
-        e.preventDefault();
-        cartWrapper.classList.toggle('open');
-    });
-}
-</script>
+<script src="<?= assetUrl('js/layout/nav.js') ?>"></script>

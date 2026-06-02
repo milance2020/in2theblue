@@ -294,19 +294,9 @@ Public site = nice URLs
 Admin panel = query URLs su OK
 ```
 
-## 9. Stari JS folder
+## 9. Aktivni cart JS
 
-Postoji folder:
-
-```text
-assets/js/shop/shop_old/
-```
-
-U njemu ima starih `index.php?page=cart...` poziva.
-
-Ako se taj folder vise ne koristi, najbolje ga je kasnije ukloniti ili arhivirati, jer moze zbunjivati.
-
-Trenutni aktivni cart JS je u:
+Aktivni cart JS je u:
 
 ```text
 assets/js/shop/shop_god/

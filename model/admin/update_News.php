@@ -5,7 +5,7 @@ if (!defined('DIR_ROOT')) {
 }
 
 require_once FILE_SECURITY_HELPER;
-require_admin();
+require_moderator();
 
 include FILE_CONNECT;
 

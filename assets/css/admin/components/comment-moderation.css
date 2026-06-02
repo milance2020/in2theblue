@@ -336,3 +336,33 @@
     }
 }
 
+/* =========================================================
+   TOAST NOTIFICATIONS
+========================================================= */
+
+#toast,
+#toast-green {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: 0.3s ease;
+    z-index: 2000;
+}
+
+#toast {
+    background: #d9534f;
+}
+
+#toast-green {
+    background: #2f855a;
+}
+
+#toast.show,
+#toast-green.show {
+    opacity: 0.9;
+}
+

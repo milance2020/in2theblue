@@ -15,15 +15,15 @@ if (
     !isset($_SESSION['ulogovan']) ||
     $_SESSION['ulogovan'] === USER_LEVEL_ANONYMOUS
 ) {
-
     header('Location: ' . appUrl('login'));
     exit;
 }
 
-if (($_SESSION['role'] ?? '') !== 'admin') {
-
+if (!isModerator()) {
     http_response_code(403);
 
+    $_output['html_model'] = 'error';
+    $_output['layout'] = '';
     $_output['view'] = 'errors/403';
 
     return;
@@ -31,126 +31,157 @@ if (($_SESSION['role'] ?? '') !== 'admin') {
 
 
 // =========================================================
-// VIEW ROUTES
+// ROUTES
 // =========================================================
 $views = [
-    ''  => [
-        'view'  => 'admin/dashboard',
+    '' => [
+        'view' => 'admin/dashboard',
         'model' => 'dashboard.php',
+        'roles' => ['admin', 'moderator'],
     ],
-
-    'dashboard'  => [
-        'view'  => 'admin/dashboard',
+    'dashboard' => [
+        'view' => 'admin/dashboard',
         'model' => 'dashboard.php',
+        'roles' => ['admin', 'moderator'],
     ],
-
     'view' => [
-        'view'  => 'admin/products-list',
+        'view' => 'admin/products-list',
         'model' => 'view_products.php',
+        'roles' => ['admin', 'moderator'],
     ],
-
     'insert' => [
         'view' => 'admin/product-insert',
+        'roles' => ['admin'],
     ],
-
     'update' => [
-        'view'  => 'admin/product-update',
+        'view' => 'admin/product-update',
         'model' => 'update_products.php',
+        'roles' => ['admin'],
     ],
-
     'orders' => [
-        'view'  => 'admin/orders-list',
+        'view' => 'admin/orders-list',
         'model' => 'view_orders.php',
+        'roles' => ['admin', 'moderator'],
     ],
-
+    'order_info' => [
+        'view' => 'admin/order-detail',
+        'model' => 'order_info.php',
+        'roles' => ['admin', 'moderator'],
+    ],
     'viewMessages' => [
-        'view'  => 'admin/messages',
+        'view' => 'admin/messages',
         'model' => 'view_messages.php',
+        'roles' => ['admin', 'moderator'],
     ],
     'contact_message_info' => [
-        'view'  => 'admin/contact-message-info',
+        'view' => 'admin/contact-message-info',
         'model' => 'model-contact-message-info.php',
-    ],
-
-    'order_info' => [
-        'view'  => 'admin/order-detail',
-        'model' => 'order_info.php',
-    ],
-
-    'insertUsers' => [
-        'view' => 'admin/user-insert',
-    ],
-
-    'insertNews' => [
-        'view' => 'admin/news-insert',
-    ],
-
-    'viewNews' => [
-        'view'  => 'admin/news-list',
-        'model' => 'view_news.php',
-    ],
-
-    'updateNews' => [
-        'view'  => 'admin/news-update',
-        'model' => 'update_news.php',
+        'roles' => ['admin', 'moderator'],
     ],
     'viewComments' => [
-        'view'  => 'admin/comments',
+        'view' => 'admin/comments',
         'model' => 'view_comments.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'insertNews' => [
+        'view' => 'admin/news-insert',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'viewNews' => [
+        'view' => 'admin/news-list',
+        'model' => 'view_news.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'updateNews' => [
+        'view' => 'admin/news-update',
+        'model' => 'update_news.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'siteContent' => [
+        'view' => 'admin/content-edit',
+        'model' => 'content_edit.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'insertUsers' => [
+        'view' => 'admin/user-insert',
+        'roles' => ['admin'],
     ],
 ];
 
-
-// =========================================================
-// ACTION ROUTES
-// =========================================================
-
 $actions = [
-
-    'insert' => 'insert.php',
-
-    'update' => 'update.php',
-
-    'delete' => 'delete_product.php',
-
-    'insertUsers' => 'insert_users_bp.php',
-
-    'insertNews' => 'insert_news.php',
-
-    'updateNews' => 'update_news_push.php',
-
-    'deleteNews' => 'delete_news.php',
-
-    'update_order_status' => 'update_orders.php',
+    'insert' => [
+        'model' => 'insert.php',
+        'roles' => ['admin'],
+    ],
+    'update' => [
+        'model' => 'update.php',
+        'roles' => ['admin'],
+    ],
+    'delete' => [
+        'model' => 'delete_product.php',
+        'roles' => ['admin'],
+    ],
+    'insertUsers' => [
+        'model' => 'insert_users_bp.php',
+        'roles' => ['admin'],
+    ],
+    'insertNews' => [
+        'model' => 'insert_news.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'updateNews' => [
+        'model' => 'update_news_push.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'deleteNews' => [
+        'model' => 'delete_news.php',
+        'roles' => ['admin'],
+    ],
+    'update_order_status' => [
+        'model' => 'update_orders.php',
+        'roles' => ['admin', 'moderator'],
+    ],
+    'updateSiteContent' => [
+        'model' => 'update_content.php',
+        'roles' => ['admin', 'moderator'],
+    ],
 ];
-
-
-// =========================================================
-// LOAD VIEW
-// =========================================================
-if (isset($views[$_view])) {
-
-    $config = $views[$_view];
-
-    $_output['view'] = $config['view'];
-
-    if (!empty($config['model'])) {
-
-        include DIR_ADMIN_MODEL . $config['model'];
-    }
-
-} else {
-
-    http_response_code(404);
-
-    $_output['view'] = 'errors/404';
-}
 
 
 // =========================================================
 // LOAD ACTION
 // =========================================================
 if (!empty($_action) && isset($actions[$_action])) {
+    $actionConfig = $actions[$_action];
 
-    include DIR_ADMIN_MODEL . $actions[$_action];
+    if (!roleCanAccess($actionConfig['roles'])) {
+        http_response_code(403);
+        $_output['view'] = 'errors/403';
+        return;
+    }
+
+    include DIR_ADMIN_MODEL . $actionConfig['model'];
+}
+
+
+// =========================================================
+// LOAD VIEW
+// =========================================================
+if (isset($views[$_view])) {
+    $config = $views[$_view];
+
+    if (!roleCanAccess($config['roles'])) {
+        http_response_code(403);
+        $_output['view'] = 'errors/403';
+        return;
+    }
+
+    $_output['view'] = $config['view'];
+
+    if (!empty($config['model'])) {
+        include DIR_ADMIN_MODEL . $config['model'];
+    }
+} else {
+    http_response_code(404);
+    $_output['view'] = 'errors/404';
 }

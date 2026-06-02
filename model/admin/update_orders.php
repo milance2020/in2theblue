@@ -1,7 +1,8 @@
 <?php
 
 require_once FILE_SECURITY_HELPER;
-require_admin();
+require_moderator();
+
 csrf_verify_or_die();
 
 include_once FILE_CONNECT;

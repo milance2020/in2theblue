@@ -7,6 +7,7 @@ require_once FILE_CONNECT;
 require_once FILE_SEO_HELPER;
 require_once FILE_COMMENT_MODERATION;
 require_once FILE_REPORT_MODERATION;
+require_once FILE_PRODUCT_FUNCTIONS;
 
 $product = null;
 $sizes = [];
@@ -47,69 +48,12 @@ if (
 // PRODUCT QUERY
 // =========================================================
 
-if ($id > 0) {
-
-    $stmt = $conn->prepare("
-        SELECT
-            p.id,
-            p.name,
-            p.slug,
-            p.description,
-            p.price,
-            p.image_path,
-
-            c.label AS category_label,
-            c.slug AS category_slug
-
-        FROM products2 p
-
-        LEFT JOIN categories c
-            ON c.id = p.category_id
-
-        WHERE p.id = ?
-          AND p.deleted_at IS NULL
-
-        LIMIT 1
-    ");
-
-    $stmt->bind_param("i", $id);
-
-} else {
-
-    $stmt = $conn->prepare("
-        SELECT
-            p.id,
-            p.name,
-            p.slug,
-            p.description,
-            p.price,
-            p.image_path,
-
-            c.label AS category_label,
-            c.slug AS category_slug
-
-        FROM products2 p
-
-        INNER JOIN categories c
-            ON c.id = p.category_id
-
-        WHERE c.slug = ?
-          AND p.slug = ?
-          AND p.deleted_at IS NULL
-
-        LIMIT 1
-    ");
-
-    $stmt->bind_param(
-        "ss",
-        $categorySlug,
-        $productSlug
-    );
-}
-
-$stmt->execute();
-
-$product = $stmt->get_result()->fetch_assoc();
+$product = loadProduct(
+    $conn,
+    $id,
+    $categorySlug,
+    $productSlug
+);
 
 // =========================================================
 // PRODUCT NOT FOUND
@@ -131,7 +75,7 @@ if (!$product) {
     die("Product not found");
 }
 
-// Very important:
+
 // after slug lookup, use real numeric product id everywhere else.
 $id = (int) $product['id'];
 
@@ -139,115 +83,20 @@ $id = (int) $product['id'];
 // SIZES QUERY
 // =========================================================
 
-$stmt = $conn->prepare("
-    SELECT
-        size,
-        stock
-    FROM product_sizes
-    WHERE product_id = ?
-    ORDER BY size ASC
-");
+$sizes = loadProductSizes(
+    $conn,
+    $id
+);
 
-$stmt->bind_param("i", $id);
-
-$stmt->execute();
-
-$result = $stmt->get_result();
-
-while ($row = $result->fetch_assoc()) {
-    $sizes[] = $row;
-}
 
 
 // =========================================================
 // RECOMMENDED PRODUCTS
 // =========================================================
-// =========================================================
-// current male   → male + unisex
-//current female → female + unisex
-//current unisex → male + female + unisex
-// =========================================================
-
-$stmt = $conn->prepare("
-    SELECT
-        p.id,
-        p.name,
-        p.slug,
-        p.price,
-        p.image_path,
-
-        c.label AS category_label,
-        c.slug AS category_slug
-
-    FROM products2 p
-
-    LEFT JOIN categories c
-        ON c.id = p.category_id
-
-    WHERE p.deleted_at IS NULL
-
-      AND p.id != ?
-
-      AND p.category_id = (
-            SELECT category_id
-            FROM products2
-            WHERE id = ?
-      )
-
-      AND (
-            (
-                (
-                    SELECT gender
-                    FROM products2
-                    WHERE id = ?
-                ) = 'unisex'
-
-                AND p.gender IN (
-                    'male',
-                    'female',
-                    'unisex'
-                )
-            )
-
-            OR
-
-            (
-                (
-                    SELECT gender
-                    FROM products2
-                    WHERE id = ?
-                ) != 'unisex'
-
-                AND (
-                    p.gender = (
-                        SELECT gender
-                        FROM products2
-                        WHERE id = ?
-                    )
-
-                    OR p.gender = 'unisex'
-                )
-            )
-      )
-
-    ORDER BY p.created_at DESC
-
-    LIMIT 4
-");
-
-$stmt->bind_param(
-    "iiiii",
-    $id,
-    $id,
-    $id,
-    $id,
+$recommendedProducts = loadRecommendedProducts(
+    $conn,
     $id
 );
-
-$stmt->execute();
-
-$recommendedProducts =
-    $stmt->get_result();
 
 // =========================================================
 // COMMENTS API
@@ -631,7 +480,25 @@ if (
 
         echo json_encode([
             'success' => false,
-            'message' => 'You already reported this comment.'
+            'message' => 'Već ste prijavili ovaj komentar.'
+        ]);
+
+        exit;
+    }
+
+    // =====================================================
+    // SELF REPORT BLOCK
+    // =====================================================
+
+    if (!isCommentReportableByUser(
+        $conn,
+        $commentId,
+        $user_id
+    )) {
+
+        echo json_encode([
+            'success' => false,
+            'message' => 'Niste mogu prijaviti svoj komentar.'
         ]);
 
         exit;
@@ -652,7 +519,7 @@ if (
 
         echo json_encode([
             'success' => false,
-            'message' => 'Failed to report comment.'
+            'message' => 'Neuspješno je prijavljivanje komentara.'
         ]);
 
         exit;

@@ -32,6 +32,33 @@ function hasUserReportedComment(
     return !!$report;
 }
 
+function isCommentReportableByUser(
+    $conn,
+    $commentId,
+    $userId
+) {
+    $stmt = $conn->prepare("SELECT user_id FROM comments WHERE id = ? LIMIT 1");
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bind_param(
+        "i",
+        $commentId
+    );
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$row) {
+        return false;
+    }
+
+    return (int) $row['user_id'] !== $userId;
+}
+
 //ADD COMMENT REPORT
 
 function addCommentReport(

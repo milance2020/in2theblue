@@ -112,9 +112,38 @@ function orderSuccessUrl(int $orderId): string
     );
 }
 
+function slugify(string $text): string
+{
+    $text = trim($text);
+
+    if ($text === '') {
+        return '';
+    }
+
+    if (function_exists('iconv')) {
+        $converted = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+
+        if ($converted !== false) {
+            $text = $converted;
+        }
+    }
+
+    $text = strtolower($text);
+    $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+    $text = trim($text, '-');
+
+    return $text ?: 'objava';
+}
+
 function newsUrl(array $news): string
 {
-    return appUrl(
-        'news/' . $news['id']
-    );
+    $id = (int) ($news['id'] ?? 0);
+
+    if ($id <= 0) {
+        return appUrl('news');
+    }
+
+    $slug = slugify($news['title'] ?? '');
+
+    return appUrl('news/' . $id . '-' . $slug);
 }

@@ -1,5 +1,12 @@
 <?php
 $page = $_GET['page'] ?? 'index';
+
+if ($page === 'index') {
+    require_once FILE_SITE_CONTENT_HELPER;
+    include_once FILE_CONNECT;
+
+    $homeHeroContent = loadHomeHeroContent($conn);
+}
 ?>
 
 <?php if ($page == 'index'): ?>
@@ -11,26 +18,25 @@ $page = $_GET['page'] ?? 'index';
             <div class="hero-content">
 
                 <span class="hero-tag">
-                    SUNSET - KOKTELI - GLAZBA
+                    <?= e($homeHeroContent['home_hero_tag']) ?>
                 </span>
 
                 <h1>
-                    Mjesto gdje ljeto ostaje duže
+                    <?= e($homeHeroContent['home_hero_title']) ?>
                 </h1>
 
                 <p>
-                    Kokteli, lokalna hrana, zalasci sunca i opuštena atmosfera
-                    inspirirana morem i mediteranskim načinom života.
+                    <?= e($homeHeroContent['home_hero_text']) ?>
                 </p>
 
                 <div class="hero-buttons">
 
                     <a href="<?= appUrl('in2thebar') ?>" class="hero-btn primary">
-                        Istražite Bar
+                        <?= e($homeHeroContent['home_hero_primary_label']) ?>
                     </a>
 
                     <a href="<?= shopUrl() ?>" class="hero-btn secondary">
-                        Posjeti Shop
+                        <?= e($homeHeroContent['home_hero_secondary_label']) ?>
                     </a>
 
                 </div>

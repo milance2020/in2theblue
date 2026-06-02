@@ -1,3 +1,4 @@
+<?php $isAdmin = ($_SESSION['role'] ?? '') === 'admin'; ?>
 <table class="products-table">
     <tr>
         <th>id</th>
@@ -7,7 +8,9 @@
         <th>Datum kreiranja</th>
         <th>Datum ažuriranja</th>
         <th>Uredi</th>
-        <th>Obriši</th>
+        <?php if ($isAdmin): ?>
+            <th>Obriši</th>
+        <?php endif; ?>
     </tr>
 
     <?php if (!empty($news)): ?>
@@ -24,14 +27,16 @@
                 <td>
                     <a href="index.php?page=adminPanel&view=updateNews&id=<?= (int) $row->id ?>">Uredi</a>
                 </td>
-                <td>
-                    <a href="index.php?page=adminPanel&action=deleteNews&id=<?= (int) $row->id ?>&<?= csrf_url() ?>" class="delete-btn">Obriši</a>
-                </td>
+                <?php if ($isAdmin): ?>
+                    <td>
+                        <a href="index.php?page=adminPanel&action=deleteNews&id=<?= (int) $row->id ?>&<?= csrf_url() ?>" class="delete-btn">Obriši</a>
+                    </td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
     <?php else: ?>
         <tr>
-            <td colspan="8">Nema vijesti</td>
+            <td colspan="<?= $isAdmin ? 8 : 7 ?>">Nema vijesti</td>
         </tr>
     <?php endif; ?>
 </table>

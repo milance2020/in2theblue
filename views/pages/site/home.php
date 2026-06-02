@@ -31,12 +31,12 @@
 
         <?php
         $cards = [
-            ['img' => 'dorucak.jpg', 'title' => 'Doručci', 'text' => 'Svježi doručci, kroasani, omleti i tost za početak dana.'],
-            ['img' => 'smoothie.jpg', 'title' => 'Smoothieji', 'text' => 'Lagani i osvježavajući smoothieji za dan uz more.'],
-            ['img' => 'kava.jpg', 'title' => 'Kava', 'text' => 'Kvalitetna kava za jutro, pauzu ili opušteno druženje.'],
-            ['img' => 'koktel.jpg', 'title' => 'Kokteli', 'text' => 'Kokteli za zalaske sunca i večernju atmosferu.'],
-            ['img' => 'ginT.jpg', 'title' => 'Gin Tonic', 'text' => 'Elegantni gin tonic izbor za posebne trenutke.'],
-            ['img' => 'pivo.jpg', 'title' => 'Pivo', 'text' => 'Hladno Hirter pivo i klasici za opuštene večeri.'],
+            ['img' => 'dorucak-card.jpg', 'title' => 'Doručci', 'text' => 'Svježi doručci, kroasani, omleti i tost za početak dana.'],
+            ['img' => 'smoothie-card.jpg', 'title' => 'Smoothieji', 'text' => 'Lagani i osvježavajući smoothieji za dan uz more.'],
+            ['img' => 'kava-card.jpg', 'title' => 'Kava', 'text' => 'Kvalitetna kava za jutro, pauzu ili opušteno druženje.'],
+            ['img' => 'koktel-card.jpg', 'title' => 'Kokteli', 'text' => 'Kokteli za zalaske sunca i večernju atmosferu.'],
+            ['img' => 'ginT-card.jpg', 'title' => 'Gin Tonic', 'text' => 'Elegantni gin tonic izbor za posebne trenutke.'],
+            ['img' => 'pivo-card.jpg', 'title' => 'Pivo', 'text' => 'Hladno Hirter pivo i klasici za opuštene večeri.'],
         ];
         ?>
 

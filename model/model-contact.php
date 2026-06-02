@@ -4,14 +4,17 @@ $_output['html_model'] = 'contact';
 $_output['breadcrumbs_enabled'] = true;
 
 require_once FILE_SEO_HELPER;
+require_once FILE_SITE_CONTENT_HELPER;
+include FILE_CONNECT;
+
 setSEO('contact');
+
+$contactContent = loadContactContent($conn);
 
 $messageSent = false;
 $errors = [];
 
 if ($_POST) {
-
-    include_once FILE_CONNECT;
 
     $fullName = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');

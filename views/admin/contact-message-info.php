@@ -50,14 +50,14 @@
                     <span>Status</span>
 
                     <select name="status" required>
-                        <option value="Unread" <?= $message->status === 'Unread' ? 'selected' : '' ?>>Unread</option>
-                        <option value="Read" <?= $message->status === 'Read' ? 'selected' : '' ?>>Read</option>
-                        <option value="Archived" <?= $message->status === 'Archived' ? 'selected' : '' ?>>Archived</option>
+                        <option value="Unread" <?= $message->status === 'Unread' ? 'selected' : '' ?>>Nepročitana</option>
+                        <option value="Read" <?= $message->status === 'Read' ? 'selected' : '' ?>>Pročitana</option>
+                        <option value="Archived" <?= $message->status === 'Archived' ? 'selected' : '' ?>>Arhivirana</option>
                     </select>
                 </div>
 
                 <button type="submit" class="btn">
-                    Save status
+                    Spremi stanje
                 </button>
 
             </form>

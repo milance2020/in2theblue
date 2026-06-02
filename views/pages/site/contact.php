@@ -1,10 +1,9 @@
 <section class="contact-page">
 
     <div class="contact-hero">
-        <h1>Kontakt</h1>
+        <h1><?= e($contactContent['contact_hero_title']) ?></h1>
         <p>
-            Imate pitanje za IN2THEBAR ili IN2THESHOP?
-            Javite nam se putem forme ili direktno preko kontakt podataka.
+            <?= e($contactContent['contact_hero_text']) ?>
         </p>
     </div>
 
@@ -12,26 +11,26 @@
 
         <div class="contact-info-card">
 
-            <h2>IN2 Kontakt</h2>
+            <h2><?= e($contactContent['contact_info_title']) ?></h2>
 
             <div class="contact-info-item">
                 <span>Adresa</span>
-                <strong>Ulica 123, Punat, Hrvatska</strong>
+                <strong><?= e($contactContent['contact_address']) ?></strong>
             </div>
 
             <div class="contact-info-item">
                 <span>Telefon</span>
-                <strong>+385 91 123 4567</strong>
+                <strong><?= e($contactContent['contact_phone']) ?></strong>
             </div>
 
             <div class="contact-info-item">
                 <span>Email</span>
-                <strong>info@in2.hr</strong>
+                <strong><?= e($contactContent['contact_email']) ?></strong>
             </div>
 
             <div class="contact-info-item">
                 <span>Radno vrijeme</span>
-                <strong>Pon - Ned: 08:00 - 02:00</strong>
+                <strong><?= e($contactContent['contact_working_hours']) ?></strong>
             </div>
 
             <div class="contact-socials">

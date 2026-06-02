@@ -7,7 +7,7 @@
         </span>
 
         <h2>
-            Meni našeg bara 🍸
+            Meni našeg bara
         </h2>
 
         <p>
@@ -17,8 +17,8 @@
 
     </div>
 
-    <button class="meni-btn" onclick="togglePDF()">
-        📖 Prikaži meni
+    <button class="meni-btn" type="button">
+        Prikaži meni
     </button>
 
     <div id="pdfContainer" class="pdf-container">
@@ -31,25 +31,4 @@
 
 </div>
 
-
-<script>
-let isVisible = false;
-
-function togglePDF() {
-
-    const container =
-        document.getElementById("pdfContainer");
-
-    const btn =
-        document.querySelector(".meni-btn");
-
-    isVisible = !isVisible;
-
-    container.style.display =
-        isVisible ? "block" : "none";
-
-    btn.textContent = isVisible
-        ? "❌ Sakrij meni"
-        : "📖 Prikaži meni";
-}
-</script>
+<script src="<?= assetUrl('js/layout/menu.js') ?>"></script>

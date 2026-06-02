@@ -6,28 +6,28 @@
         class="<?= ($status ?? '') === '' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=contact_messages"
     >
-        All
+        Sve
     </a>
 
     <a 
         class="<?= ($status ?? '') === 'Unread' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=contact_messages&status=Unread"
     >
-        Unread
+        Nepročitane
     </a>
 
     <a 
         class="<?= ($status ?? '') === 'Read' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=contact_messages&status=Read"
     >
-        Read
+        Pročitane
     </a>
 
     <a 
         class="<?= ($status ?? '') === 'Archived' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=contact_messages&status=Archived"
     >
-        Archived
+        Arhivirane
     </a>
 
 </div>

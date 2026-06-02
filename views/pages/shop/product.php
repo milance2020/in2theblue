@@ -95,6 +95,7 @@
             <h2>Komentari</h2>
 
             <div id="toast"></div>
+            <div id="toast-green"></div>
 
             <?php if (!empty($_SESSION['ulogovan'])): ?>
 

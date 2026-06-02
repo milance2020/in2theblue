@@ -75,6 +75,28 @@
     transform: translateY(-2px);
 }
 
+.checkout-form button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+.checkout-errors {
+    padding: 14px 16px;
+    border: 1px solid #f0b8b8;
+    border-radius: 10px;
+    background: #fff1f1;
+    color: #9b1c1c;
+}
+
+.checkout-errors p {
+    margin: 0 0 6px;
+}
+
+.checkout-errors p:last-child {
+    margin-bottom: 0;
+}
+
 .summary-row {
     display: flex;
     justify-content: space-between;
@@ -88,6 +110,10 @@
     border-top: 1px solid #ddd;
     font-size: 22px;
     font-weight: 700;
+}
+
+.empty-order {
+    color: #777;
 }
 
 

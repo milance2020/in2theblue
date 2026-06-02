@@ -25,6 +25,7 @@
 <div class="admin-comments"></div>
 
 <div id="toast"></div>
+<div id="toast-green"></div>
 
 <script
     src="<?= URL_ASSETS_JS_ADMIN_COMMENTS . 'comment_mod.js' ?>"

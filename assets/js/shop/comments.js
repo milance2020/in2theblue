@@ -42,11 +42,11 @@ comments.addEventListener(
 
             <textarea
                 name = "reply"
-                placeholder = "Write a reply..."
+                placeholder = "Napiši odgovor..."
             ></textarea>
 
                 <button type="submit">
-                    Reply
+                    Odgovori
                 </button>
 
              </form>`;
@@ -106,7 +106,10 @@ comments.addEventListener(
 
             if (!data.success) {
 
-                console.error(data.message);
+                showToast(
+                    data.message,
+                    'error'
+                );
 
                 return;
             }
@@ -119,7 +122,7 @@ comments.addEventListener(
             if (data.status === 'visible') {
 
                 showToast(
-                    'Comment added successfully.'
+                    'Komentar uspješno dodan.'
                 );
 
                 replyForm.remove();
@@ -137,7 +140,7 @@ comments.addEventListener(
             if (data.status === 'pending') {
 
                 showToast(
-                    'Your comment is awaiting moderation.'
+                    'Vaš komentar je na čekanju.'
                 );
 
                 replyForm.remove();
@@ -153,14 +156,15 @@ comments.addEventListener(
             if (data.status === 'hidden') {
 
                 showToast(
-                    'Your comment could not be published.'
+                    'Vaš komentar nije mogao biti objavljen.',
+                    'error'
                 );
                 replyForm.remove();
                 return;
             }
 
         } catch (err) {
-            showToast('Something went wrong.');
+            showToast('Nešto je pošlo naopako.', 'error');
 
             console.error(
                 'Reply submit error:',
@@ -220,7 +224,8 @@ comments.addEventListener(
             if (!data.success) {
 
                 showToast(
-                    data.message
+                    data.message,
+                    'error'
                 );
 
                 return;
@@ -232,7 +237,7 @@ comments.addEventListener(
             // =================================================
 
             showToast(
-                'Comment reported.'
+                'Komentar je prijavljen.'
             );
 
 
@@ -250,7 +255,8 @@ comments.addEventListener(
         } catch (err) {
 
             showToast(
-                'Something went wrong.'
+                'Something went wrong.',
+                'error'
             );
 
             console.error(
@@ -281,7 +287,7 @@ async function loadComments(productId) {
 
         if (!data.success) {
 
-            console.error(data.message);
+            showToast(data.message, 'error');
 
             return;
         }
@@ -302,7 +308,7 @@ async function loadComments(productId) {
 
             commentsContainer.innerHTML = `
             <div class="no-comments">
-                Još nema komentara.
+                Nema komentara.
                 </div>
             `;
 
@@ -319,7 +325,7 @@ async function loadComments(productId) {
                 .join('');
 
     } catch (err) {
-        showToast('Something went wrong.');
+        showToast('Nešto je pošlo naopako.', 'error');
         console.error(
             'Load comments error:',
             err
@@ -398,17 +404,42 @@ function renderComment(comment) {
 
 function formatDate(dateString) {
 
-    const date =
-        new Date(dateString);
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffSecs = Math.floor(diffMs / 1000);
+    const diffMins = Math.floor(diffSecs / 60);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
 
-    return date.toLocaleDateString(
-        'hr-HR',
-        {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        }
-    );
+    // Ako je manje od minutu
+    if (diffSecs < 60) {
+        return 'Upravo sada';
+    }
+
+    // Ako je manje od sata
+    if (diffMins < 60) {
+        return `Prije ${diffMins} ${diffMins === 1 ? 'minut' : 'minuta'}`;
+    }
+
+    // Ako je manje od dana
+    if (diffHours < 24) {
+        return `Prije ${diffHours} ${diffHours === 1 ? 'sat' : 'sati'}`;
+    }
+
+    // Ako je manje od tjedna
+    if (diffDays < 7) {
+        return `Prije ${diffDays} ${diffDays === 1 ? 'dan' : 'dana'}`;
+    }
+
+    // Stariji komentari - prikaži datum i vrijeme
+    return date.toLocaleDateString('hr-HR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 }
 
 
@@ -625,13 +656,12 @@ if (commentsContainer) {
     loadComments(productId);
 }
 
-function showToast(message) {
+function showToast(message, type = 'success') {
 
-    const toast =
-        document.getElementById('toast');
+    const toastId = type === 'error' ? 'toast' : 'toast-green';
+    const toast = document.getElementById(toastId);
 
     toast.textContent = message;
-
     toast.classList.add('show');
 
     setTimeout(() => {

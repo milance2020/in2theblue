@@ -1,23 +1,27 @@
+<?php
+require_once FILE_SITE_CONTENT_HELPER;
+include_once FILE_CONNECT;
+
+$footerContent = loadFooterContent($conn);
+?>
+
 <footer id="footer">
 
     <div class="footer-container">
 
-        <!-- BRAND -->
         <div class="footer-section footer-brand">
 
-            <h3>IN2</h3>
+            <h3><?= e($footerContent['footer_brand_title']) ?></h3>
 
             <p>
-                IN2 spaja atmosferu bara, udoban smještaj i moderan shop
-                na jednom mjestu. Mjesto za druženje, odmor i stil.
+                <?= e($footerContent['footer_brand_text']) ?>
             </p>
 
         </div>
 
-        <!-- NAVIGATION -->
         <div class="footer-section">
 
-            <h4>Navigacija</h4>
+            <h4><?= e($footerContent['footer_navigation_title']) ?></h4>
 
             <ul class="footer-links">
                 <li>
@@ -31,8 +35,6 @@
                         IN2THEBAR
                     </a>
                 </li>
-
-                
 
                 <li>
                     <a href="<?= appUrl('in2theshop') ?>">
@@ -49,50 +51,48 @@
 
         </div>
 
-        <!-- CONTACT -->
         <div class="footer-section">
 
-            <h4>Kontakt</h4>
+            <h4><?= e($footerContent['footer_contact_title']) ?></h4>
 
-            <p>Ulica 123, Punta</p>
+            <p><?= e($footerContent['footer_address']) ?></p>
 
             <p>
-                +385 91 123 4567
+                <?= e($footerContent['footer_phone']) ?>
             </p>
 
             <p>
-                info@in2.hr
+                <?= e($footerContent['footer_email']) ?>
             </p>
 
         </div>
 
-        <!-- SOCIAL / HOURS -->
         <div class="footer-section">
 
-            <h4>Pratite nas</h4>
+            <h4><?= e($footerContent['footer_social_title']) ?></h4>
 
             <div class="footer-socials">
 
-                <a href="#">
-                    Instagram
+                <a href="<?= e($footerContent['footer_instagram_url']) ?>">
+                    <?= e($footerContent['footer_instagram_label']) ?>
                 </a>
 
-                <a href="#">
-                    Facebook
+                <a href="<?= e($footerContent['footer_facebook_url']) ?>">
+                    <?= e($footerContent['footer_facebook_label']) ?>
                 </a>
 
-                <a href="#">
-                    TikTok
+                <a href="<?= e($footerContent['footer_tiktok_url']) ?>">
+                    <?= e($footerContent['footer_tiktok_label']) ?>
                 </a>
 
             </div>
 
             <div class="footer-hours">
 
-                <p>Radno vrijeme</p>
+                <p><?= e($footerContent['footer_hours_title']) ?></p>
 
                 <strong>
-                    Pon - Ned: 08:00 - 02:00
+                    <?= e($footerContent['footer_hours_text']) ?>
                 </strong>
 
             </div>
@@ -104,7 +104,7 @@
     <div class="footer-bottom">
 
         <p>
-            © 2025 IN2. Sva prava pridržana.
+            <?= e($footerContent['footer_bottom_text']) ?>
         </p>
 
     </div>

@@ -10,7 +10,7 @@ async function loadAdminComments(status = 'pending') {
 
        
         if (!data.success) {
-            console.error(data.message);
+            showToast(data.message, 'error');
             return;
         }
 
@@ -208,7 +208,7 @@ document.addEventListener(
            
             if (!data.success) {
 
-                console.error(data.message);
+                showToast(data.message, 'error');
 
                 return;
             }
@@ -263,10 +263,11 @@ document.addEventListener(
             
             if (!data.success) {
 
-                console.error(data.message);
+                showToast(data.message, 'error');
 
                 return;
             }
+
             showToast(
                 'Komentar je sada vidljiv.'
             );
@@ -279,13 +280,12 @@ document.addEventListener(
 );
 
 
-function showToast(message) {
+function showToast(message, type = 'success') {
 
-    const toast =
-        document.getElementById('toast');
+    const toastId = type === 'error' ? 'toast' : 'toast-green';
+    const toast = document.getElementById(toastId);
 
     toast.textContent = message;
-
     toast.classList.add('show');
 
     setTimeout(() => {

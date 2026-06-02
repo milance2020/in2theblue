@@ -2,7 +2,7 @@ class CartService {
 
     static async request(action, payload = {}) {
 
-        const apiCart = window.APP_URLS?.apiCart ?? 'api/cart.php';
+        const apiCart = document.body?.dataset.apiCartUrl ?? 'api/cart.php';
         const res = await fetch(`${apiCart}?action=${encodeURIComponent(action)}`, {
             method: "POST",
             headers: {

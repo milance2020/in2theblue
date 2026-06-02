@@ -1,0 +1,129 @@
+.site-content-editor {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.site-content-header {
+    margin-bottom: 22px;
+}
+
+.site-content-header h1 {
+    margin: 0 0 8px;
+    color: #1f2a37;
+}
+
+.site-content-header p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.site-content-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.content-section-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.content-section-title {
+    padding: 18px 22px;
+    border-bottom: 1px solid #eef2f7;
+    background: #fafafa;
+}
+
+.content-section-title h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #1f2a37;
+}
+
+.content-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    padding: 22px;
+}
+
+.content-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.content-field-wide {
+    grid-column: 1 / -1;
+}
+
+.content-field label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.content-field input,
+.content-field textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 11px 12px;
+    font-size: 15px;
+    color: #111827;
+    background: #fff;
+}
+
+.content-field textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.content-field input:focus,
+.content-field textarea:focus {
+    outline: none;
+    border-color: #009ca6;
+    box-shadow: 0 0 0 3px rgba(0, 156, 166, 0.12);
+}
+
+.site-content-actions {
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+    bottom: 0;
+    padding: 16px 0;
+    background: #f5f5f5;
+}
+
+.site-content-actions .btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    background: #111827;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+    .content-fields-grid {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .content-section-title {
+        padding: 16px;
+    }
+
+    .site-content-actions {
+        justify-content: stretch;
+    }
+
+    .site-content-actions .btn {
+        width: 100%;
+    }
+}

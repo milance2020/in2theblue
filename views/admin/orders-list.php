@@ -5,42 +5,42 @@
         class="<?= $status === '' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=orders"
     >
-        All
+        Sve
     </a>
 
     <a 
         class="<?= $status === 'Pending' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=orders&status=Pending"
     >
-        Pending
+        Na čekanju
     </a>
 
     <a 
         class="<?= $status === 'Processing' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=orders&status=Processing"
     >
-        Processing
+        U obradi
     </a>
 
     <a 
         class="<?= $status === 'Shipped' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=orders&status=Shipped"
     >
-        Shipped
+        Poslana
     </a>
 
     <a 
         class="<?= $status === 'Completed' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=orders&status=Completed"
     >
-        Completed
+        Gotova
     </a>
 
     <a 
         class="<?= $status === 'Cancelled' ? 'active-filter' : '' ?>"
         href="index.php?page=adminPanel&view=orders&status=Cancelled"
     >
-        Cancelled
+        Otkazana
     </a>
 
 </div>
@@ -48,10 +48,10 @@
 <table class="products-table">
     <tr>
         <th>ID</th>
-        <th>Musterija</th>
-        <th>Total</th>
-        <th>Status</th>
-        <th>Vrijeme Narudžbe</th>
+        <th>Kupac</th>
+        <th>Iznos</th>
+        <th>Stanje</th>
+        <th>Vrijeme narudžbe</th>
     </tr>
     <?php if (!empty($orders)): ?>
         <?php foreach ($orders as $row): ?>
@@ -61,7 +61,7 @@
                 <td><?= $row->total_price?></td>
                 <td><?= $row->status?></td>
                 <td><?= $row->created_at?></td>
-                <td><a href="index.php?page=adminPanel&view=order_info&id=<?=(int)$row->id?>">Pregledaj</a></td>
+                <td><a href="index.php?page=adminPanel&view=order_info&id=<?=(int)$row->id?>">Pregled</a></td>
                 
 
             </tr>

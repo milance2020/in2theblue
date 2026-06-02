@@ -186,16 +186,14 @@ fetch(`${apiCart}?action=${action}`)
 
 `apiCart` dolazi iz:
 
-```php
-window.APP_URLS = {
-    apiCart: URL_API_CART
-}
+```html
+<body data-api-cart-url="/v5/api/cart.php">
 ```
 
-To se postavlja u layoutu:
+JS ga čita iz layouta:
 
-```php
-views/layouts/nav.php
+```js
+document.body.dataset.apiCartUrl
 ```
 
 ## 6. `CartUI`
@@ -351,48 +349,9 @@ Dobre stvari:
 
 ## 13. Sta bi se kasnije moglo popraviti
 
-Ovo nisu hitne stvari, ali su dobre za buduce poboljsanje:
+Ovo nije hitno, ali je dobro za buduce poboljsanje:
 
-### 1. Ukloniti stari cart JS
-
-Postoji folder:
-
-```text
-assets/js/shop/shop_old/
-```
-
-To izgleda kao stara verzija cart sistema. Ako se vise ne koristi, moze zbunjivati i kasnije bi se mogao ukloniti.
-
-### 2. Izbaciti duplu cart logiku iz `model-cart-checkout.php`
-
-U `model-cart-checkout.php` postoji stara remove akcija i poseban `cartCount()`.
-
-Posto vec postoji centralni API:
-
-```php
-model/api/api-cart.php
-model/helpers/cart.php
-```
-
-bolje je da se sva cart logika drzi tamo.
-
-### 3. Dodati CSRF za checkout formu
-
-Narudzba se salje kao POST forma u:
-
-```php
-model/model-order.php
-```
-
-Mogao bi se dodati `csrf_input()` u formu i `csrf_verify_or_die()` u model.
-
-### 4. Jos jednom provjeriti stock pri kreiranju narudzbe
-
-Stock se provjerava kod dodavanja u korpu, ali dobro je provjeriti ga opet prije upisa narudzbe.
-
-Razlog: od trenutka dodavanja u korpu do checkouta stock se mogao promijeniti.
-
-### 5. Popraviti encoding tekstove
+### Popraviti encoding tekstove
 
 U nekim cart/order viewovima jos ima pokvarenih karaktera, npr:
 
