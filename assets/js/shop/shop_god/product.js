@@ -1,6 +1,7 @@
 class ProductPage {
 
     static init() {
+        // Elementi postoje samo na product detail stranici.
         this.qtyEl = document.querySelector('.qty');
         this.sizeSelect = document.querySelector('.size-select');
         this.addBtn = document.querySelector('.add-to-cart-button');
@@ -12,6 +13,7 @@ class ProductPage {
     }
 
     static bindQty() {
+        // Kolicina se mijenja lokalno, server provjerava stock na add.
         if (this.increaseBtn && this.qtyEl) {
             this.increaseBtn.addEventListener('click', () => {
                 let qty = parseInt(this.qtyEl.textContent, 10) || 1;
@@ -30,6 +32,7 @@ class ProductPage {
     }
 
     static bindAdd() {
+        // Slanje proizvoda u cart API.
         if (!this.addBtn) return;
 
         this.addBtn.addEventListener('click', async () => {

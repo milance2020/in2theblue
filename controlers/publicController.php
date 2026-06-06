@@ -2,6 +2,7 @@
 
 $_show_news = false;
 
+// Bijela lista public/admin stranica koje aplikacija smije ucitati.
 switch ($_page) {
     case '':
     case 'index':
@@ -70,6 +71,7 @@ switch ($_page) {
 
 $model_filename = DIR_MODEL . 'model-' . $_page . '.php';
 
+// Ako model ne postoji, ne pucamo nego idemo na 404 model.
 if (!file_exists($model_filename)) {
     $model_filename = DIR_MODEL . 'model-error404.php';
 }

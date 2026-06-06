@@ -4,7 +4,8 @@ require_once FILE_SITE_CONTENT_HELPER;
 include FILE_CONNECT;
 
 $contentSections = [
-    'Home hero' => homeHeroContentDefaults(),
+    'Bar hero' => homeHeroContentDefaults(),
+    'Shop hero' => shopHeroContentDefaults(),
     'Kontakt stranica' => contactContentDefaults(),
     'Footer' => footerContentDefaults(),
 ];

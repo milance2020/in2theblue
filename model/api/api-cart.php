@@ -14,6 +14,7 @@ $action = $_GET['action'] ?? '';
 
 try {
 
+    // Sve cart akcije primaju JSON body iz JavaScripta.
     $data = json_decode(file_get_contents("php://input"), true) ?? [];
 
     $id   = (int)($data['id'] ?? 0);
@@ -35,6 +36,7 @@ try {
     // GET
     // =========================
     if ($action === 'get') {
+        // GET vraca cijelo stanje korpe za mini cart i cart stranicu.
 
         $items = cartGet($conn);
 

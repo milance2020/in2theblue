@@ -34,6 +34,7 @@ if (!isModerator()) {
 // ROUTES
 // =========================================================
 $views = [
+    // Svaka ruta odmah kaze koji view/model ucitava i koje role smiju uci.
     '' => [
         'view' => 'admin/dashboard',
         'model' => 'dashboard.php',
@@ -109,6 +110,7 @@ $views = [
 ];
 
 $actions = [
+    // Akcije su odvojene od viewova jer uglavnom rade redirect nakon POST-a.
     'insert' => [
         'model' => 'insert.php',
         'roles' => ['admin'],
@@ -154,6 +156,7 @@ $actions = [
 if (!empty($_action) && isset($actions[$_action])) {
     $actionConfig = $actions[$_action];
 
+    // Ako rola nema pravo na akciju, ne ucitavamo action model.
     if (!roleCanAccess($actionConfig['roles'])) {
         http_response_code(403);
         $_output['view'] = 'errors/403';
@@ -170,6 +173,7 @@ if (!empty($_action) && isset($actions[$_action])) {
 if (isset($views[$_view])) {
     $config = $views[$_view];
 
+    // I view se provjerava, da moderator ne otvori admin-only stranicu rucno.
     if (!roleCanAccess($config['roles'])) {
         http_response_code(403);
         $_output['view'] = 'errors/403';

@@ -337,6 +337,83 @@ appUrl('order')
 appUrl('cart')
 ```
 
+### Dublje objasnjenje canonical taga
+
+Canonical tag je HTML tag koji se stavlja u `<head>`:
+
+```html
+<link rel="canonical" href="https://example.com/shop">
+```
+
+Njegova ideja je:
+
+```text
+Ako se isti ili vrlo slican sadrzaj moze otvoriti preko vise URL-ova,
+canonical govori trazilici koja adresa je glavna.
+```
+
+Primjer iz projekta:
+
+```text
+/v5/index.php?page=explore
+/v5/shop
+```
+
+Obje adrese mogu prikazati shop listu proizvoda. Ali ne zelimo da Google misli da su to dvije posebne stranice sa istim sadrzajem. Zato canonical treba pokazivati na clean verziju:
+
+```text
+/v5/shop
+```
+
+Bitno je zapamtiti:
+
+- canonical nije redirect
+- canonical ne mijenja URL u browseru
+- canonical je signal za trazilice
+- 301 redirect je jace rjesenje ako zelis stvarno prebaciti stari URL na novi
+
+U ovom projektu canonical se cuva u:
+
+```php
+$_output['canonical']
+```
+
+Primjeri:
+
+```php
+$_output['canonical'] = appUrl('in2theshop');
+$_output['canonical'] = shopUrl();
+$_output['canonical'] = productUrl($product);
+$_output['canonical'] = appUrl('cart');
+$_output['canonical'] = appUrl('order');
+```
+
+To znaci da model ili SEO helper pripremi URL, a layout ga kasnije ispise u `<head>`.
+
+### Kada canonical posebno pomaze
+
+Canonical je koristan kada imas:
+
+- stari query URL i novi clean URL
+- product stranicu koja moze imati fallback preko `id`
+- shop listing sa filterima
+- stranicu koja se moze otvoriti preko vise putanja
+
+Primjer product stranice:
+
+```text
+/v5/index.php?page=product&id=15
+/v5/shop/majice/basic-shirt
+```
+
+Bolje je da canonical bude clean product URL:
+
+```text
+/v5/shop/majice/basic-shirt
+```
+
+Tako trazilica zna da je to glavna verzija proizvoda.
+
 ## 10. Gdje se SEO podaci ispisuju
 
 U layoutu:
@@ -357,6 +434,217 @@ Ako postoji canonical:
 
 ```php
 <link rel="canonical" href="<?= e($_output['canonical']) ?>">
+```
+
+### Sta tacno imamo u `<head>` dijelu
+
+U `views/layouts/nav.php` se nalazi pocetak HTML dokumenta i `<head>` dio stranice.
+
+Trenutno se koriste ovi elementi:
+
+```html
+<meta charset="UTF-8">
+```
+
+Ovo govori browseru da stranica koristi UTF-8 encoding. To je bitno zbog slova kao sto su `č`, `ć`, `š`, `đ`, `ž`.
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+Ovo je bitno za responsive dizajn. Bez ovoga mobilni browseri mogu prikazivati stranicu kao da je desktop stranica smanjena.
+
+```html
+<title>...</title>
+```
+
+Title je naslov stranice. Vidi se u tabu browsera i cesto se koristi kao naslov rezultata na Google-u.
+
+U projektu dolazi iz:
+
+```php
+$_output['meta_title']
+```
+
+Ako nije postavljen, koristi se fallback:
+
+```php
+'Shop'
+```
+
+```html
+<meta name="description" content="...">
+```
+
+Description je kratak opis stranice. Google ga ne mora uvijek prikazati, ali je dobar SEO signal i pomaze da rezultat izgleda normalno.
+
+U projektu dolazi iz:
+
+```php
+$_output['meta_description']
+```
+
+Za product stranicu se description uzima iz opisa proizvoda, ali se ocisti funkcijom:
+
+```php
+cleanMetaDescription()
+```
+
+Ta funkcija uklanja HTML tagove i skracuje tekst.
+
+```html
+<meta name="robots" content="index, follow">
+```
+
+Robots meta tag govori trazilicama sta da rade sa stranicom.
+
+U projektu dolazi iz:
+
+```php
+$_output['meta_robots']
+```
+
+Ako nije posebno postavljen, default je:
+
+```text
+index, follow
+```
+
+To znaci:
+
+- `index` - smijes indeksirati ovu stranicu
+- `follow` - smijes pratiti linkove sa ove stranice
+
+Za privatne ili procesne stranice koristimo:
+
+```text
+noindex, nofollow
+```
+
+To znaci:
+
+- `noindex` - ne prikazuj ovu stranicu u rezultatima pretrage
+- `nofollow` - ne prati linkove sa ove stranice
+
+U projektu se ovo koristi za:
+
+```php
+cart
+checkout
+```
+
+Razlog je jednostavan: korpa i narucivanje nisu javni sadrzaj. Nema smisla da Google indeksira neciju korpu ili checkout proces.
+
+Za order success se koristi:
+
+```text
+noindex, follow
+```
+
+To znaci:
+
+- ne indeksiraj success stranicu
+- ali linkove sa nje mozes pratiti
+
+```html
+<link rel="canonical" href="...">
+```
+
+Canonical pokazuje glavnu verziju trenutne stranice.
+
+Ako `$_output['canonical']` nije prazan, layout ga ispise. Ako nije postavljen, canonical tag se ne ispisuje.
+
+```html
+<link rel="icon" ...>
+<link rel="apple-touch-icon" ...>
+```
+
+Ovo su favicon tagovi. Oni nisu direktno SEO kao title ili description, ali su dio profesionalnog `<head>` setupa. Browser ih koristi za tab ikonu, bookmarke i mobilne prikaze.
+
+### Kako `seo.php` odlucuje robots vrijednost
+
+Na pocetku `setSEO()` funkcije postoji default:
+
+```php
+$_output['meta_robots'] = $data['robots'] ?? 'index, follow';
+```
+
+To znaci:
+
+```text
+Ako stranica ne kaze drugacije, smije se indeksirati.
+```
+
+Onda posebni tipovi stranica mogu pregaziti tu vrijednost.
+
+Primjer za cart:
+
+```php
+$_output['meta_robots'] = 'noindex, nofollow';
+```
+
+Primjer za order success:
+
+```php
+$_output['meta_robots'] = 'noindex, follow';
+```
+
+Ovo je dobar princip:
+
+```text
+Public informativne stranice: index, follow
+Privatne/procesne stranice: noindex
+```
+
+### Sta je implementirano po tipovima stranica
+
+`shop`:
+
+- title: `In2TheShop`
+- description: osnovni opis shopa
+- canonical: clean shop landing URL
+- breadcrumbs: pocetna + shop
+
+`explore`:
+
+- title se mijenja po kategoriji, spolu ili pretrazi
+- description opisuje kolekciju proizvoda
+- canonical dolazi iz trenutnog clean URL-a ili fallbacka
+- breadcrumbs prate filtere
+
+`product`:
+
+- title koristi ime proizvoda
+- description koristi opis proizvoda
+- canonical koristi clean product URL
+- breadcrumbs vode kroz shop, proizvode, kategoriju i proizvod
+
+`cart`:
+
+- title: korpa
+- robots: `noindex, nofollow`
+- canonical: `/cart`
+
+`checkout`:
+
+- title: narucivanje
+- robots: `noindex, nofollow`
+- canonical: `/order`
+
+`order_success`:
+
+- title: uspjesna narudzba
+- robots: `noindex, follow`
+- breadcrumbs pokazuju da je korisnik zavrsio narudzbu
+
+### Najkrace objasnjenje canonical + robots
+
+Mozes zapamtiti ovako:
+
+```text
+Canonical rjesava pitanje: Koji URL je glavni?
+Robots rjesava pitanje: Smije li trazilica indeksirati ovu stranicu?
+Meta title i description rjesavaju pitanje: Kako stranica izgleda u rezultatima pretrage?
 ```
 
 ## 11. Sta radi `view.php`
@@ -612,7 +900,7 @@ admin/dashboard je sadrzaj unutar okvira
 
 Mozes reci:
 
-> `seo.php` koristim da centralizujem meta title, description, robots, canonical URL i breadcrumbs. Model samo pozove `setSEO()` sa tipom stranice, a helper popuni SEO podatke u `$_output`. `view.php` koristim da ne pisem rucno pune putanje do view fajlova. Funkcija `view_path()` primi kratko ime viewa, kao `shop/product` ili `admin/dashboard`, i vrati stvarnu putanju fajla koji treba include-ati.
+> `seo.php` koristim da centralizujem meta title, description, robots, canonical URL i breadcrumbs. Model samo pozove `setSEO()` sa tipom stranice, a helper popuni SEO podatke u `$_output`. Public stranice imaju `index, follow`, dok korpa i checkout imaju `noindex` jer nisu javni sadrzaj za Google. Canonical pokazuje koja je glavna clean URL verzija stranice. `view.php` koristim da ne pisem rucno pune putanje do view fajlova. Funkcija `view_path()` primi kratko ime viewa, kao `shop/product` ili `admin/dashboard`, i vrati stvarnu putanju fajla koji treba include-ati.
 
 ## 21. Bitna napomena o encodingu
 

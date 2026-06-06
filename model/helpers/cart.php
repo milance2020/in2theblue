@@ -78,6 +78,7 @@ function getStock($conn, $productId, $size)
 // =========================================================
 function cartAdd($conn, $productId, $size, $qty)
 {
+    // Server opet provjerava stock, ne vjerujemo samo JavaScriptu.
     if ($productId <= 0 || $qty <= 0 || !$size) {
         return ['success' => false, 'message' => 'Invalid data'];
     }
@@ -186,6 +187,7 @@ function cartDecrease($conn, $productId, $size)
 // =========================================================
 function cartGet($conn)
 {
+    // Session cuva samo ID/velicinu/kolicinu, detalje ucitavamo iz baze.
     $items = [];
 
     foreach ($_SESSION['cart'] ?? [] as $id => $sizes) {

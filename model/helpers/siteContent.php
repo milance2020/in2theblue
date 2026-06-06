@@ -34,6 +34,17 @@ function homeHeroContentDefaults(): array
     ];
 }
 
+function shopHeroContentDefaults(): array
+{
+    return [
+        'shop_hero_tag' => 'MORE - OPREMA - LIFESTYLE',
+        'shop_hero_title' => 'Istražite obalni lifestyle',
+        'shop_hero_text' => 'Premium nautička oprema, aktivan život uz more, bike i SUP rental te proizvodi inspirirani morem i avanturom.',
+        'shop_hero_primary_label' => 'Istražite Shop',
+        'shop_hero_secondary_label' => 'Posjeti Bar',
+    ];
+}
+
 function contactContentDefaults(): array
 {
     return [
@@ -73,11 +84,22 @@ function footerContentTitles(): array
 function homeHeroContentTitles(): array
 {
     return [
-        'home_hero_tag' => 'Hero oznaka',
-        'home_hero_title' => 'Hero naslov',
-        'home_hero_text' => 'Hero tekst',
+        'home_hero_tag' => 'Bar hero oznaka',
+        'home_hero_title' => 'Bar hero naslov',
+        'home_hero_text' => 'Bar hero tekst',
         'home_hero_primary_label' => 'Tekst prvog dugmeta',
         'home_hero_secondary_label' => 'Tekst drugog dugmeta',
+    ];
+}
+
+function shopHeroContentTitles(): array
+{
+    return [
+        'shop_hero_tag' => 'Shop hero oznaka',
+        'shop_hero_title' => 'Shop hero naslov',
+        'shop_hero_text' => 'Shop hero tekst',
+        'shop_hero_primary_label' => 'Tekst prvog dugmeta',
+        'shop_hero_secondary_label' => 'Tekst drugog dugmeta',
     ];
 }
 
@@ -96,8 +118,10 @@ function contactContentTitles(): array
 
 function editableContentDefaults(): array
 {
+    // Sve sekcije koje se mogu mijenjati iz admin panela.
     return footerContentDefaults()
         + homeHeroContentDefaults()
+        + shopHeroContentDefaults()
         + contactContentDefaults();
 }
 
@@ -105,11 +129,13 @@ function editableContentTitles(): array
 {
     return footerContentTitles()
         + homeHeroContentTitles()
+        + shopHeroContentTitles()
         + contactContentTitles();
 }
 
 function loadSiteContent(mysqli $conn, array $defaults): array
 {
+    // Ako tabela ili red ne postoje, koristimo default tekstove.
     $content = $defaults;
 
     $result = $conn->query("
@@ -122,6 +148,7 @@ function loadSiteContent(mysqli $conn, array $defaults): array
     }
 
     while ($row = $result->fetch_assoc()) {
+        // Uzimamo samo kljuceve koje aplikacija poznaje.
         if (array_key_exists($row['content_key'], $content)) {
             $content[$row['content_key']] = $row['content'];
         }
@@ -138,6 +165,11 @@ function loadFooterContent(mysqli $conn): array
 function loadHomeHeroContent(mysqli $conn): array
 {
     return loadSiteContent($conn, homeHeroContentDefaults());
+}
+
+function loadShopHeroContent(mysqli $conn): array
+{
+    return loadSiteContent($conn, shopHeroContentDefaults());
 }
 
 function loadContactContent(mysqli $conn): array

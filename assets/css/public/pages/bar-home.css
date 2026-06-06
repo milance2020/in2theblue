@@ -88,6 +88,7 @@
 ========================================================= */
 
 .bar-offer-grid {
+    /* Kartice koriste optimizovane 900x600 slike. */
     max-width: 1180px;
 
     margin: 0 auto;
@@ -265,6 +266,7 @@
 }
 
 .pdf-container {
+    /* PDF meni je sakriven dok ga JS ne otvori klikom. */
     display: none;
 
     width: 100%;

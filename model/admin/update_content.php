@@ -14,6 +14,7 @@ include FILE_CONNECT;
 $defaults = editableContentDefaults();
 $titles = editableContentTitles();
 
+// Isti query radi insert novih kljuceva i update postojecih.
 $stmt = $conn->prepare("
     INSERT INTO site_content (content_key, title, content)
     VALUES (?, ?, ?)
@@ -29,6 +30,7 @@ if (!$stmt) {
 }
 
 foreach ($defaults as $key => $defaultValue) {
+    // Cuvamo samo kljuceve koje aplikacija poznaje.
     $value = trim($_POST['content'][$key] ?? $defaultValue);
     $title = $titles[$key] ?? $key;
 

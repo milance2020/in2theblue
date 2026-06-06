@@ -20,6 +20,7 @@ const commentForm =
 
 const comments = document.querySelector('.comments');
 
+// Event delegation: dugmad za reply/report nastaju tek nakon rendera komentara.
 comments.addEventListener(
     'click',
     function (e) {

@@ -1,6 +1,7 @@
 class CartService {
 
     static async request(action, payload = {}) {
+        // Jedno mjesto za sve cart API pozive.
 
         const apiCart = document.body?.dataset.apiCartUrl ?? 'api/cart.php';
         const res = await fetch(`${apiCart}?action=${encodeURIComponent(action)}`, {
@@ -26,6 +27,7 @@ class CartService {
     }
 
     static add(id, size, qty = 1) {
+        // Dodavanje iz explore/product stranice.
         return this.request('add', { id, size, qty });
     }
 

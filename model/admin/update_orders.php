@@ -18,6 +18,7 @@ $allowedStatuses = [
     'Cancelled'
 ];
 
+// Status mora biti jedan od dogovorenih statusa iz admin forme.
 if ($orderId <= 0 || !in_array($newStatus, $allowedStatuses, true)) {
     flash_set('error', 'Neispravan zahtjev za narudžbu.');
     header("Location: index.php?page=adminPanel&view=orders");
@@ -27,6 +28,7 @@ if ($orderId <= 0 || !in_array($newStatus, $allowedStatuses, true)) {
 $conn->begin_transaction();
 
 try {
+    // Stock smanjujemo samo jednom, kad narudzba prvi put ode na Shipped.
     $stmt = $conn->prepare("
         SELECT status, stock_reduced
         FROM orders
@@ -48,6 +50,7 @@ try {
         $newStatus === 'Shipped';
 
     if ($shouldReduceStock) {
+        // Ako bilo koji proizvod nema dovoljno zaliha, sve se rollbacka.
         $stmt = $conn->prepare("
             SELECT product_id, size, quantity
             FROM order_items

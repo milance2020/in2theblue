@@ -11,6 +11,7 @@ class CheckoutPage {
     }
 
     static async loadInitial() {
+        // Cart stranica se puni preko API-ja, ne preko PHP rendera.
         const data = await CartService.get();
 
         if (!data.success || !data.items.length) {
@@ -23,6 +24,7 @@ class CheckoutPage {
     }
 
     static bindEvents() {
+        // Nakon svake promjene opet ucitamo korpu da UI bude tacan.
         document.querySelectorAll('.remove-item-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
                 await CartService.remove(btn.dataset.id, btn.dataset.size);
@@ -63,6 +65,7 @@ class CheckoutPage {
     }
 
     static render(data) {
+        // Ovdje gradimo HTML za trenutni sadrzaj korpe.
         const container = document.querySelector('#cart-app');
         if (!container) return;
 

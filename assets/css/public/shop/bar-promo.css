@@ -3,6 +3,7 @@
 ========================================================= */
 
 .bar-promo-section {
+    /* Shop landing poziva korisnika nazad na In2TheBar. */
     position: relative;
     margin: 90px 6%;
     min-height: 520px;
@@ -15,6 +16,7 @@
 }
 
 .bar-promo-overlay {
+    /* Tamni overlay drzi tekst citljivim preko fotografije. */
     position: absolute;
     inset: 0;
     background: linear-gradient(to right, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.28));

@@ -107,6 +107,7 @@ if (
     isset($_GET['action']) &&
     $_GET['action'] === 'get_comments'
 ) {
+    // Product stranica koristi isti model i za mali JSON comments API.
 
     header('Content-Type: application/json');
 
@@ -217,6 +218,7 @@ if (
     isset($_GET['action']) &&
     $_GET['action'] === 'add_comment'
 ) {
+    // Komentar prvo prodje kroz jednostavnu moderaciju, pa ide u bazu.
 
     header('Content-Type: application/json');
 
@@ -341,6 +343,7 @@ if (
     isset($_GET['action']) &&
     $_GET['action'] === 'add_reply'
 ) {
+    // Reply je isti princip kao komentar, samo ima parent_id.
     header('Content-Type: application/json');
 
     $input = json_decode(
@@ -435,6 +438,7 @@ if (
     isset($_GET['action']) &&
     $_GET['action'] === 'add_report'
 ) {
+    // Report cuvamo posebno da korisnik ne moze vise puta prijaviti isto.
 
     header('Content-Type: application/json');
 

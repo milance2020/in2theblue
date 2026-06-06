@@ -2,11 +2,13 @@
 
 function e($value): string
 {
+    // Kratki helper za siguran ispis u HTML-u.
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 }
 
 function csrf_token(): string
 {
+    // Jedan token po sesiji, koristi se za forme i admin akcije.
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
@@ -26,6 +28,7 @@ function csrf_url(): string
 
 function csrf_verify_or_die(): void
 {
+    // Poredi token iz forme/linka sa tokenom iz sesije.
     $token = $_POST['csrf_token'] ?? $_GET['csrf_token'] ?? '';
 
     if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
@@ -36,6 +39,7 @@ function csrf_verify_or_die(): void
 
 function require_admin(): void
 {
+    // Samo pravi admin smije pokretati najosjetljivije akcije.
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -58,6 +62,7 @@ function isAdmin(): bool
 
 function isModerator(): bool
 {
+    // Moderator panel dozvoljavamo i adminu i moderatoru.
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -85,11 +90,13 @@ function currentRole(): string
 
 function roleCanAccess(array $allowedRoles): bool
 {
+    // Centralna provjera za adminPanel rute.
     return in_array(currentRole(), $allowedRoles, true);
 }
 
 function flash_set(string $type, string $message): void
 {
+    // Poruka se sacuva u sesiji i prikaze nakon redirecta.
     $_SESSION['flash'][] = [
         'type' => $type,
         'message' => $message,
@@ -98,6 +105,7 @@ function flash_set(string $type, string $message): void
 
 function flash_render(): string
 {
+    // Nakon prikaza brisemo poruke da se ne ponavljaju.
     if (empty($_SESSION['flash']) || !is_array($_SESSION['flash'])) {
         return '';
     }

@@ -6,6 +6,7 @@ class ExplorePage {
     }
 
 static bindSizes() {
+    // Velicina se cuva na add dugmetu unutar iste kartice.
 
     document.querySelectorAll('.size-btn')
         .forEach(btn => {
@@ -18,9 +19,6 @@ static bindSizes() {
                 const productCard =
                     btn.closest('.product-card');
 
-                // remove active only
-                // inside this card
-
                 productCard
                     .querySelectorAll('.size-btn')
                     .forEach(b =>
@@ -28,9 +26,6 @@ static bindSizes() {
                     );
 
                 btn.classList.add('active');
-
-                // set size only
-                // for this product
 
                 const addButton =
                     productCard.querySelector(
@@ -43,6 +38,7 @@ static bindSizes() {
         });
 }
     static bindAddButtons() {
+        // Explore dodaje po 1 komad odabrane velicine.
 
         document.querySelectorAll('.add-to-cart-button')
             .forEach(btn => {
@@ -51,9 +47,6 @@ static bindSizes() {
 
                     const id = btn.dataset.id;
                     const size = btn.dataset.size;
-                   // const productCard = btn.closest('.product-card');
-                    //const sizeSelect = productCard.querySelector('.size-btn');
-                    //const size2 = sizeSelect.value;
 
                     if (!size) {
                         alert("Molimo odaberite veličinu!");

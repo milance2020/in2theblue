@@ -7,6 +7,7 @@ function appUrl(string $path = ''): string
 
 function pageUrl(string $page, array $params = []): string
 {
+    // Public stranice dobijaju nice URL, admin moze ostati query URL.
     $cleanPaths = [
         'index' => 'in2thebar',
         'shop' => 'in2theshop',
@@ -83,6 +84,7 @@ function assetUrl(string $path): string
 
 function storedFileUrl(?string $path): string
 {
+    // Baza nekad cuva relativan path, nekad vec kompletan URL.
     $path = trim($path ?? '');
 
     if ($path === '') {
@@ -114,6 +116,7 @@ function orderSuccessUrl(int $orderId): string
 
 function slugify(string $text): string
 {
+    // Od naslova pravimo dio URL-a: "Moj naslov" -> "moj-naslov".
     $text = trim($text);
 
     if ($text === '') {
@@ -137,6 +140,7 @@ function slugify(string $text): string
 
 function newsUrl(array $news): string
 {
+    // ID je glavni za lookup, slug je radi citljivosti i SEO-a.
     $id = (int) ($news['id'] ?? 0);
 
     if ($id <= 0) {

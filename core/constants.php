@@ -58,13 +58,17 @@ define('FILE_SITE_CONTENT_HELPER', DIR_MODEL_HELPERS . 'siteContent.php');
 
 define('FILE_API_CART', DIR_MODEL_API . 'api-cart.php');
 define('FILE_API_CART_ENDPOINT', DIR_API . 'cart.php');
+define('FILE_LAYOUT_DOCUMENT_START', DIR_VIEW_LAYOUTS . 'document-start.php');
 define('FILE_LAYOUT_NAV', DIR_VIEW_LAYOUTS . 'nav.php');
-define('FILE_LAYOUT_HEADER', DIR_VIEW_LAYOUTS . 'header.php');
+define('FILE_LAYOUT_HERO', DIR_VIEW_LAYOUTS . 'hero.php');
+/** @deprecated Use FILE_LAYOUT_HERO */
+define('FILE_LAYOUT_HEADER', FILE_LAYOUT_HERO);
 define('FILE_LAYOUT_BODY', DIR_VIEW_LAYOUTS . 'body.php');
 define('FILE_LAYOUT_FOOTER', DIR_VIEW_LAYOUTS . 'footer.php');
 define('FILE_LAYOUT_MENU', DIR_VIEW_LAYOUTS . 'menu.php');
 define('FILE_PARTIAL_NEWS_LATEST', DIR_VIEW_PARTIALS . 'news-latest.php');
 /** @deprecated Use FILE_LAYOUT_* constants */
+define('FILE_PAGE_DOCUMENT_START', FILE_LAYOUT_DOCUMENT_START);
 define('FILE_PAGE_NAV', FILE_LAYOUT_NAV);
 define('FILE_PAGE_HEADER', FILE_LAYOUT_HEADER);
 define('FILE_PAGE_BODY', FILE_LAYOUT_BODY);

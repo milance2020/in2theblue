@@ -30,7 +30,8 @@ Tabela `site_content` sada ne služi samo za footer.
 
 Koristi se i za:
 
-- home hero tekst
+- bar hero tekst
+- shop hero tekst
 - kontakt uvodni tekst
 - kontakt podatke
 - footer

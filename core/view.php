@@ -12,6 +12,7 @@
  */
 function view_path(string $name): string
 {
+    // View ime pretvaramo u stvarnu putanju na disku.
     $name = trim(str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $name), DIRECTORY_SEPARATOR);
 
     if ($name === '') {

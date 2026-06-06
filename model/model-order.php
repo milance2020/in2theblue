@@ -13,6 +13,7 @@ $items = cartGet($conn);
 $total = 0;
 $errors = [];
 
+// Cuvamo vrijednosti da forma ostane popunjena ako validacija padne.
 $formData = [
     'full_name' => '',
     'email' => '',
@@ -34,6 +35,7 @@ foreach ($items as $item) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify_or_die();
 
+    // Prvo pokupimo podatke iz forme, pa ih validiramo.
     foreach ($formData as $key => $value) {
         $formData[$key] = trim($_POST[$key] ?? '');
     }
@@ -67,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     foreach ($items as $item) {
+        // Stock se provjeri jos jednom bas prije kreiranja narudzbe.
         $stock = getStock($conn, (int) $item['id'], (string) $item['size']);
 
         if ((int) $item['qty'] > $stock) {
@@ -75,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
+        // Kupac, narudzba i stavke moraju biti upisani zajedno.
         $conn->begin_transaction();
 
         try {
@@ -157,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $conn->commit();
 
+            // Nakon uspjesne narudzbe korpa vise nije potrebna.
             unset($_SESSION['cart']);
 
             header('Location: ' . orderSuccessUrl($orderId));

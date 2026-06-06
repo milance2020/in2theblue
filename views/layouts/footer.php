@@ -110,3 +110,6 @@ $footerContent = loadFooterContent($conn);
     </div>
 
 </footer>
+
+</body>
+</html>

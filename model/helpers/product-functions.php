@@ -1,6 +1,7 @@
 <?php
 function loadProduct(mysqli $conn, int $id, string $categorySlug, string $productSlug)
 {
+    // Podrzava i stari ID link i novi /shop/kategorija/proizvod URL.
     if ($id > 0) {
         $sql = "
             SELECT
@@ -85,6 +86,7 @@ function loadProductSizes(mysqli $conn, int $productId): array
 
 function loadRecommendedProducts(mysqli $conn, int $productId)
 {
+    // Preporuke su iz iste kategorije, uz jednostavnu gender logiku.
     $stmt = $conn->prepare("
     SELECT
         p.id,

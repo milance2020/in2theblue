@@ -21,6 +21,7 @@ $slug    = $_GET['slug'] ?? '';
 // =========================================================
 
 $_output = [
+    // Modeli pune ovaj niz, layout ga kasnije koristi za render i SEO.
     // VIEW
     'view' => '',
     'layout' => '',
@@ -43,8 +44,8 @@ $_output = [
     'breadcrumbs_enabled' => false,
     'breadcrumbs' => [],
 
-    // Later useful
-    'canonical_url' => '',
+    // Canonical URL za SEO helper/layout.
+    'canonical' => '',
 ];
 
 
@@ -59,9 +60,6 @@ if (!isset($_SESSION['cart'])) {
 }
 
 
-// =========================================================
-// BOOTSTRAP
-// =========================================================
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'constants.php';
 
@@ -80,7 +78,9 @@ require_once FILE_PUBLIC_CONTROLLER;
 
 include $model_filename;
 
+// Render ide uvijek istim redom: document start, nav, hero, body, footer.
+include FILE_LAYOUT_DOCUMENT_START;
 include FILE_LAYOUT_NAV;
-include FILE_LAYOUT_HEADER;
+include FILE_LAYOUT_HERO;
 include FILE_LAYOUT_BODY;
 include FILE_LAYOUT_FOOTER;

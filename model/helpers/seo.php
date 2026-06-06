@@ -6,6 +6,7 @@ if (!defined('URL_INDEX')) {
 
 function addBreadcrumb(string $label, ?string $url = null): void
 {
+    // Breadcrumb se puni u modelu, a prikazuje u body layoutu.
     global $_output;
 
     $_output['breadcrumbs'][] = [
@@ -47,11 +48,13 @@ function genderLabel(string $gender): string
 
 function cleanMetaDescription(?string $text): string
 {
+    // Meta description ne treba HTML i treba ostati kratak.
     return substr(strip_tags($text ?? ''), 0, 160);
 }
 
 function setSEO(string $type, array $data = []): void
 {
+    // Centralno mjesto za title, description, canonical i breadcrumbs.
     global $_output;
 
     $_output['meta_robots'] = $data['robots'] ?? 'index, follow';
@@ -72,6 +75,7 @@ function setSEO(string $type, array $data = []): void
     }
 
     if ($type === 'product') {
+        // Product SEO koristi stvarne podatke proizvoda.
         $name = $data['name'] ?? 'Product';
 
         $_output['meta_title'] = $name . ' | Shop';
@@ -96,6 +100,7 @@ function setSEO(string $type, array $data = []): void
     }
 
     if ($type === 'explore') {
+        // Filteri mijenjaju naslov i breadcrumbs na shop listingu.
         $category = $data['category'] ?? '';
         $gender = $data['gender'] ?? '';
         $search = $data['search'] ?? '';

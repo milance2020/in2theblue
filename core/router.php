@@ -7,6 +7,7 @@
 $url = trim($_GET['url'] ?? '', '/');
 
 if ($url === '') {
+    // Prazan URL ide na normalni index flow.
     return;
 }
 
@@ -33,6 +34,7 @@ $cleanRoutes = [
 ];
 
 if (isset($cleanRoutes[$firstSegment])) {
+    // Clean URL pretvaramo u stari interni page parametar.
     $_GET['page'] = $cleanRoutes[$firstSegment];
 }
 
@@ -108,6 +110,7 @@ if (
     $firstSegment === 'news' &&
     isset($segments[1])
 ) {
+    // ID ostaje broj, slug je samo za citljiv URL.
     $_GET['page'] = 'news';
     $_GET['id'] = (int) $segments[1];
 

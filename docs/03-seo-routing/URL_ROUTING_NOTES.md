@@ -182,7 +182,7 @@ To je fallback, ali cilj je da proizvodi imaju slugove.
 Pravi URL za vijest:
 
 ```text
-/v5/news/15
+/v5/news/15-naslov-vijesti
 ```
 
 ## 5. `pageUrl()` sada radi public clean URL
@@ -249,7 +249,103 @@ $_output['canonical'] = appUrl('order');
 $_output['canonical'] = productUrl($product);
 ```
 
-## 7. Sta smo pregledali
+Vazno:
+
+```text
+Canonical ne prebacuje korisnika na drugi URL.
+Canonical samo kaze trazilici koja je glavna verzija stranice.
+```
+
+Znaci, ako korisnik otvori:
+
+```text
+/v5/index.php?page=explore
+```
+
+stranica se i dalje moze prikazati, ali canonical u `<head>` treba pokazivati na:
+
+```text
+/v5/shop
+```
+
+To pomaze Google-u da ne tretira obje adrese kao dvije jednako vazne stranice.
+
+## 7. Canonical vs 301 redirect
+
+Canonical i 301 redirect nisu ista stvar.
+
+### Canonical
+
+Canonical je SEO signal.
+
+Koristi se kada stranica moze postojati na vise URL-ova, ali zelis reci:
+
+```text
+Ovaj URL je glavni.
+```
+
+Primjer:
+
+```text
+/v5/index.php?page=explore
+/v5/shop
+```
+
+Canonical treba biti:
+
+```text
+/v5/shop
+```
+
+### 301 redirect
+
+301 redirect stvarno prebacuje korisnika i browser na novi URL.
+
+Primjer:
+
+```text
+/v5/index.php?page=explore
+```
+
+automatski ide na:
+
+```text
+/v5/shop
+```
+
+To je jace rjesenje za produkciju jer stari public URL vise ne ostaje kao posebna adresa.
+
+### Sta je najbolje u ovom projektu
+
+Trenutno je dobro sto:
+
+- public linkovi uglavnom koriste helper funkcije
+- canonical pokazuje na clean URL
+- router podrzava nice URL-ove
+
+Za produkciju bi jos bolje bilo dodati 301 redirect za stare public query URL-ove.
+
+Primjeri koje ima smisla redirectati:
+
+```text
+/v5/index.php?page=explore       -> /v5/shop
+/v5/index.php?page=shop          -> /v5/in2theshop
+/v5/index.php?page=contact       -> /v5/contact
+/v5/index.php?page=news          -> /v5/news
+/v5/index.php?page=cart-checkout -> /v5/cart
+/v5/index.php?page=order         -> /v5/order
+```
+
+Admin query URL-ove ne treba dirati:
+
+```text
+index.php?page=adminPanel&view=orders
+index.php?page=adminPanel&view=content
+```
+
+Oni nisu public SEO dio sajta i normalno je da ostanu query URL-ovi.
+
+## 8. Sta smo pregledali
 
 Pretrazeni su linkovi koji koriste:
 
@@ -271,7 +367,7 @@ Public propusti koji su popravljeni:
 - SEO canonical koristi clean URL gdje treba
 - product canonical koristi `productUrl($product)`
 
-## 8. Sta je namjerno ostavljeno kao query URL
+## 9. Sta je namjerno ostavljeno kao query URL
 
 Admin panel je ostavljen kao query URL:
 
@@ -294,7 +390,7 @@ Public site = nice URLs
 Admin panel = query URLs su OK
 ```
 
-## 9. Aktivni cart JS
+## 10. Aktivni cart JS
 
 Aktivni cart JS je u:
 
@@ -302,7 +398,7 @@ Aktivni cart JS je u:
 assets/js/shop/shop_god/
 ```
 
-## 10. Kako ubuduce dodavati linkove
+## 11. Kako ubuduce dodavati linkove
 
 Nemoj rucno pisati:
 
@@ -348,8 +444,8 @@ Za admin je OK:
 index.php?page=adminPanel&view=orders
 ```
 
-## 11. Kratko objasnjenje za ispit
+## 12. Kratko objasnjenje za ispit
 
 Mozes reci:
 
-> Aplikacija interno koristi `page` parametar da zna koji model i view treba ucitati, ali korisniku se prikazuju clean URL-ovi. Router clean URL pretvara u interne parametre. Linkovi u public dijelu se prave preko helper funkcija kao sto su `shopUrl`, `productUrl` i `newsUrl`, pa ne moram rucno pisati `index.php?page=...`. Canonical URL u SEO helperu pokazuje na clean verziju stranice, tako da nema dvije glavne adrese za isti sadrzaj.
+> Aplikacija interno koristi `page` parametar da zna koji model i view treba ucitati, ali korisniku se prikazuju clean URL-ovi. Router clean URL pretvara u interne parametre. Linkovi u public dijelu se prave preko helper funkcija kao sto su `shopUrl`, `productUrl` i `newsUrl`, pa ne moram rucno pisati `index.php?page=...`. Canonical URL u SEO helperu pokazuje trazilicama koja je glavna clean verzija stranice. Ako zelim potpuno ukloniti stare public query URL-ove iz upotrebe, onda se za produkciju dodaje 301 redirect sa starog URL-a na novi clean URL.
